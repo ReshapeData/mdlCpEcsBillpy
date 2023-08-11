@@ -231,6 +231,8 @@ def ERP_Save(app2,app3,api_sdk,option,data):
 
                         if audit_res:
 
+                            insertLog(app3, "组装拆卸单", i['FBillNo'], "数据同步成功", "1")
+
                             changeStatus(app3,i['FBillNo'],"1")
 
                             sucess_num=sucess_num+1
@@ -239,7 +241,7 @@ def ERP_Save(app2,app3,api_sdk,option,data):
                         pass
                 else:
 
-                    insertLog(app3, "组装拆卸单数据异常", i['FBillNo'],
+                    insertLog(app3, "组装拆卸单", i['FBillNo'],
                                  save_res['Result']['ResponseStatus']['Errors'][0]['Message'],"2")
 
                     changeStatus(app3, i['FBillNo'], "2")
@@ -249,7 +251,7 @@ def ERP_Save(app2,app3,api_sdk,option,data):
                     erro_list.append(save_res)
 
             else:
-                insertLog(app3, "组装拆卸单数据异常", i['FBillNo'],"数据同步成功", "1")
+                insertLog(app3, "组装拆卸单", i['FBillNo'],"数据同步成功", "1")
 
                 changeStatus(app3, i['FBillNo'], "1")
 

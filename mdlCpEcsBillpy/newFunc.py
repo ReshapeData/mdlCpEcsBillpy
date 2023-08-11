@@ -94,7 +94,6 @@ def purchaseOrderByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
         "server_url": key[0]["server_url"],
     }
 
-
     data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_pur_poorder", field="FPURORDERNO", FNumber=FNumber)
 
     data = purchaseorder.purchaseOrder_byOrder(app2=app2, app3=app3, option=option, data=data)
@@ -543,7 +542,7 @@ def getDataSource_byDate(app3, tablename, field, FStartDate):
     :return:
     '''
 
-    sql = f"""select * from {tablename} where {field} like '{FStartDate}'"""
+    sql = f"""select * from {tablename} where CONVERT(date,{field},20) = '{FStartDate}'"""
 
     res = app3.select(sql)
 
@@ -866,7 +865,6 @@ def saleOrderByDate_query(token, FStartDate):
 
     data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_Sales_Order", field="FSALEDATE",
                                  FStartDate=FStartDate)
-
     res = pd.DataFrame(data)
 
     return res
@@ -1380,7 +1378,7 @@ def otherInStockErpDataByFNumber_query(token,FNumber,FName="赛普集团新账�
     }
 
 
-    res = ERPData_query(api_sdk=api_sdk, option=option, FNumber=FNumber, Formid="SAL_SaleOrder")
+    res = ERPData_query(api_sdk=api_sdk, option=option, FNumber=FNumber, Formid="STK_MISCELLANEOUS")
 
     return res
 
@@ -1413,7 +1411,7 @@ def otherOutErpDataByFNumber_query(token,FNumber,FName="赛普集团新账套"):
         "server_url": key[0]["server_url"],
     }
 
-    res = ERPData_query(api_sdk=api_sdk, option=option, FNumber=FNumber, Formid="STK_MISCELLANEOUS")
+    res = ERPData_query(api_sdk=api_sdk, option=option, FNumber=FNumber, Formid="STK_MisDelivery")
 
     return res
 
@@ -1662,10 +1660,10 @@ def Status_upload(app3, tablename, field, FNumber):
     return "单据状态修改已完成"
 
 
-def deleteData(app3,FTableName,field,FNumber):
+def DataStatus_update(app3,FTableName,field,FNumber):
 
     sql=f"""
-    delete from {FTableName} where {field}='{FNumber}'
+    update a set a.FIsdo=0 from {FTableName} a where a.{field}='{FNumber}'
     """
 
     app3.update(sql)
@@ -1679,25 +1677,8 @@ def saleOrderStatus_upload(token,FNumber,FName="赛普集团新账套"):
     '''
 
     app3 = RdClient(token=token)
-    
-    sql = f"select * from rds_key_values where FName='{FName}'"
-    
-    key = app3.select(sql)
-    
-    app2 = RdClient(token=key[0]["FApp2"])
-    
-    
-    deleteData(app3=app3,FTableName="RDS_ECS_src_Sales_Order",field="FSALEORDERNO",FNumber=FNumber)
-    
-    deleteData(app3=app3, FTableName="RDS_ECS_ods_Sales_Order", field="FSALEORDERNO", FNumber=FNumber)
-    
-    df=ecsinterface.writeSRC(FNumber=FNumber,FNumber2=FNumber,app3=app3,viewname="v_sales_order_details",field="FSALEORDERNO")
-    
-    odernum = list(set(list(df['FSALEORDERNO'])))
-    
-    df = df.fillna("")
-    
-    salesorder.insert_SAL_ORDER_Table_byOrder(app2=app2, app3=app3, ordernum=odernum,df=df)
+
+    DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_Sales_Order", field="FSALEORDERNO", FNumber=FNumber)
 
     return "修改成功"
     
@@ -1713,26 +1694,8 @@ def purchaseOrderStatus_upload(token,FNumber,FName="赛普集团新账套"):
     '''
 
     app3 = RdClient(token=token)
-    
-    sql = f"select * from rds_key_values where FName='{FName}'"
-    
-    key = app3.select(sql)
-    
-    app2 = RdClient(token=key[0]["FApp2"])
-    
-    
-    deleteData(app3=app3, FTableName="RDS_ECS_src_pur_poorder", field="FPURORDERNO", FNumber=FNumber)
-    
-    deleteData(app3=app3, FTableName="RDS_ECS_ods_pur_poorder", field="FPURORDERNO", FNumber=FNumber)
-    
-    df = ecsinterface.writeSRC(FNumber=FNumber, FNumber2=FNumber, app3=app3, viewname="v_procurement_order",
-                               field="FPURORDERNO")
-    
-    odernum = list(set(list(df['FPURORDERNO'])))
-    
-    df = df.fillna("")
-    
-    purchaseorder.insert_procurement_order(app2=app2, app3=app3, odernum=odernum, df=df,api_sdk="",option="")
+
+    DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_pur_poorder", field="FPURORDERNO", FNumber=FNumber)
 
     return "修改成功"
 
@@ -1744,22 +1707,7 @@ def noticeShipmentStatus_upload(token,FNumber,FName="赛普集团新账套"):
     
     app3 = RdClient(token=token)
 
-    sql = f"select * from rds_key_values where FName='{FName}'"
-
-    key = app3.select(sql)
-
-    app2 = RdClient(token=key[0]["FApp2"])
-
-    deleteData(app3=app3, FTableName="RDS_ECS_src_sal_delivery", field="FDELIVERYNO", FNumber=FNumber)
-
-    deleteData(app3=app3, FTableName="RDS_ECS_ods_sal_delivery", field="FDELIVERYNO", FNumber=FNumber)
-
-    df = ecsinterface.writeSRC(FNumber=FNumber, FNumber2=FNumber, app3=app3, viewname="v_sales_delivery",
-                               field="FDELIVERYNO")
-
-    df = df.fillna("")
-
-    noticeshipment.insert_sales_delivery(app2,app3, df)
+    DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_sal_delivery", field="FDELIVERYNO", FNumber=FNumber)
 
     return "修改成功"
     
@@ -1771,24 +1719,7 @@ def receiptNoticeStatus_upload(token,FNumber,FName="赛普集团新账套"):
     
     app3 = RdClient(token=token)
 
-    sql = f"select * from rds_key_values where FName='{FName}'"
-
-    key = app3.select(sql)
-
-    app2 = RdClient(token=key[0]["FApp2"])
-
-    deleteData(app3=app3, FTableName="RDS_ECS_src_pur_storageacct", field="FGODOWNNO", FNumber=FNumber)
-
-    deleteData(app3=app3, FTableName="RDS_ECS_ods_pur_storageacct", field="FGODOWNNO", FNumber=FNumber)
-
-    df = ecsinterface.writeSRC(FNumber=FNumber, FNumber2=FNumber, app3=app3, viewname="v_procurement_storage",
-                               field="FGODOWNNO")
-
-    odernum = list(set(list(df['FGODOWNNO'])))
-
-    df = df.fillna("")
-
-    receiptnotice.insert_procurement_storage(app2, app3, df, odernum)
+    DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_pur_storageacct", field="FGODOWNNO", FNumber=FNumber)
 
     return "修改成功"
     
@@ -1799,23 +1730,7 @@ def saleOutStatus_upload(token,FNumber,FName="赛普集团新账套"):
     
     app3 = RdClient(token=token)
 
-    sql = f"select * from rds_key_values where FName='{FName}'"
-
-    key = app3.select(sql)
-
-    app2 = RdClient(token=key[0]["FApp2"])
-
-
-    deleteData(app3=app3, FTableName="RDS_ECS_src_sal_delivery", field="FDELIVERYNO", FNumber=FNumber)
-
-    deleteData(app3=app3, FTableName="RDS_ECS_ods_sal_delivery", field="FDELIVERYNO", FNumber=FNumber)
-
-    df = ecsinterface.writeSRC(FNumber=FNumber, FNumber2=FNumber, app3=app3, viewname="v_sales_delivery",
-                               field="FDELIVERYNO")
-
-    df = df.fillna("")
-
-    noticeshipment.insert_sales_delivery(app2,app3, df)
+    DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_sal_delivery", field="FDELIVERYNO", FNumber=FNumber)
 
     return "修改成功"
     
@@ -1826,25 +1741,7 @@ def purchaseStorageStatus_upload(token,FNumber,FName="赛普集团新账套"):
    
     app3 = RdClient(token=token)
 
-    sql = f"select * from rds_key_values where FName='{FName}'"
-
-    key = app3.select(sql)
-
-    app2 = RdClient(token=key[0]["FApp2"])
-
-
-    deleteData(app3=app3, FTableName="RDS_ECS_src_pur_storageacct", field="FGODOWNNO", FNumber=FNumber)
-
-    deleteData(app3=app3, FTableName="RDS_ECS_ods_pur_storageacct", field="FGODOWNNO", FNumber=FNumber)
-
-    df = ecsinterface.writeSRC(FNumber=FNumber, FNumber2=FNumber, app3=app3, viewname="v_procurement_storage",
-                               field="FGODOWNNO")
-
-    odernum = list(set(list(df['FGODOWNNO'])))
-
-    df = df.fillna("")
-
-    receiptnotice.insert_procurement_storage(app2, app3, df, odernum)
+    DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_pur_storageacct", field="FGODOWNNO", FNumber=FNumber)
 
     return "修改成功"
 
@@ -1855,24 +1752,7 @@ def otherInStockStatus_upload(token,FNumber,FName="赛普集团新账套"):
     
     app3 = RdClient(token=token)
 
-    sql = f"select * from rds_key_values where FName='{FName}'"
-
-    key = app3.select(sql)
-
-    app2 = RdClient(token=key[0]["FApp2"])
-
-    deleteData(app3=app3, FTableName="RDS_ECS_src_pur_storageacct", field="FGODOWNNO", FNumber=FNumber)
-
-    deleteData(app3=app3, FTableName="RDS_ECS_ods_pur_storageacct", field="FGODOWNNO", FNumber=FNumber)
-
-    df = ecsinterface.writeSRC(FNumber=FNumber, FNumber2=FNumber, app3=app3, viewname="v_procurement_storage",
-                               field="FGODOWNNO")
-
-    odernum = list(set(list(df['FGODOWNNO'])))
-
-    df = df.fillna("")
-
-    receiptnotice.insert_procurement_storage(app2, app3, df, odernum)
+    DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_pur_storageacct", field="FGODOWNNO", FNumber=FNumber)
 
     return "修改成功"
 
@@ -1883,22 +1763,7 @@ def otherOutStatus_upload(token,FNumber,FName="赛普集团新账套"):
    
     app3 = RdClient(token=token)
 
-    sql = f"select * from rds_key_values where FName='{FName}'"
-
-    key = app3.select(sql)
-
-    app2 = RdClient(token=key[0]["FApp2"])
-
-    deleteData(app3=app3, FTableName="RDS_ECS_src_sal_delivery", field="FDELIVERYNO", FNumber=FNumber)
-
-    deleteData(app3=app3, FTableName="RDS_ECS_ods_sal_delivery", field="FDELIVERYNO", FNumber=FNumber)
-
-    df = ecsinterface.writeSRC(FNumber=FNumber, FNumber2=FNumber, app3=app3, viewname="v_sales_delivery",
-                               field="FDELIVERYNO")
-
-    df = df.fillna("")
-
-    noticeshipment.insert_sales_delivery(app2,app3, df)
+    DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_sal_delivery", field="FDELIVERYNO", FNumber=FNumber)
 
     return "修改成功"
 
@@ -1909,23 +1774,7 @@ def salesBillingStatus_upload(token,FNumber,FName="赛普集团新账套"):
    
     app3 = RdClient(token=token)
 
-    sql = f"select * from rds_key_values where FName='{FName}'"
-
-    key = app3.select(sql)
-
-    app2 = RdClient(token=key[0]["FApp2"])
-
-
-    deleteData(app3=app3, FTableName="RDS_ECS_src_sal_billreceivable", field="FBillNo", FNumber=FNumber)
-
-    deleteData(app3=app3, FTableName="RDS_ECS_ods_sal_billreceivable", field="FBillNo", FNumber=FNumber)
-
-    df = ecsinterface.writeSRC(FNumber=FNumber, FNumber2=FNumber, app3=app3, viewname="v_sales_invoice",
-                               field="FBILLNO")
-
-    df = df.fillna("")
-
-    salesbilling.insert_sales_invoice(app2,app3, df)
+    DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_sal_billreceivable", field="FBillNo", FNumber=FNumber)
 
     return "修改成功"
 
@@ -1936,23 +1785,7 @@ def purchasesBillingStatus_upload(token,FNumber,FName="赛普集团新账套"):
     
     app3 = RdClient(token=token)
 
-    sql = f"select * from rds_key_values where FName='{FName}'"
-
-    key = app3.select(sql)
-
-    app2 = RdClient(token=key[0]["FApp2"])
-
-
-    deleteData(app3=app3, FTableName="RDS_ECS_src_pur_invoice", field="FBILLNO", FNumber=FNumber)
-
-    deleteData(app3=app3, FTableName="RDS_ECS_ods_pur_invoice", field="FBILLNO", FNumber=FNumber)
-
-    df = ecsinterface.writeSRC(FNumber=FNumber, FNumber2=FNumber, app3=app3, viewname="v_procurement_contract",
-                               field="FBILLNO")
-
-    df = df.fillna("")
-
-    purchasesbilling.insert_procurement_contract(app2, app3, df)
+    DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_pur_invoice", field="FBILLNO", FNumber=FNumber)
 
     return "修改成功"
         
@@ -1964,23 +1797,7 @@ def returnNoticeStatus_upload(token,FNumber,FName="赛普集团新账套"):
    
     app3 = RdClient(token=token)
 
-    sql = f"select * from rds_key_values where FName='{FName}'"
-
-    key = app3.select(sql)
-
-    app2 = RdClient(token=key[0]["FApp2"])
-
-
-    deleteData(app3=app3, FTableName="RDS_ECS_src_sal_returnstock", field="FMRBBILLNO", FNumber=FNumber)
-
-    deleteData(app3=app3, FTableName="RDS_ECS_ods_sal_returnstock", field="FMRBBILLNO", FNumber=FNumber)
-
-    df = ecsinterface.writeSRC(FNumber=FNumber, FNumber2=FNumber, app3=app3, viewname="v_sales_return",
-                               field="FMRBBILLNO")
-
-    df = df.fillna("")
-
-    returnnotice.insert_sales_return(app2, app3, df)
+    DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_sal_returnstock", field="FMRBBILLNO", FNumber=FNumber)
 
     return "修改成功"
    
@@ -1992,23 +1809,7 @@ def returnSaleStatus_upload(token,FNumber,FName="赛普集团新账套"):
    
     app3 = RdClient(token=token)
 
-    sql = f"select * from rds_key_values where FName='{FName}'"
-
-    key = app3.select(sql)
-
-    app2 = RdClient(token=key[0]["FApp2"])
-
-
-    deleteData(app3=app3, FTableName="RDS_ECS_src_sal_returnstock", field="FMRBBILLNO", FNumber=FNumber)
-
-    deleteData(app3=app3, FTableName="RDS_ECS_ods_sal_returnstock", field="FMRBBILLNO", FNumber=FNumber)
-
-    df = ecsinterface.writeSRC(FNumber=FNumber, FNumber2=FNumber, app3=app3, viewname="v_sales_return",
-                               field="FMRBBILLNO")
-
-    df = df.fillna("")
-
-    returnnotice.insert_sales_return(app2, app3, df)
+    DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_sal_returnstock", field="FMRBBILLNO", FNumber=FNumber)
 
     return "修改成功"
         
@@ -2020,23 +1821,7 @@ def returnRequestStatus_upload(token,FNumber,FName="赛普集团新账套"):
    
     app3 = RdClient(token=token)
 
-    sql = f"select * from rds_key_values where FName='{FName}'"
-
-    key = app3.select(sql)
-
-    app2 = RdClient(token=key[0]["FApp2"])
-
-
-    deleteData(app3=app3, FTableName="RDS_ECS_src_pur_return", field="FMRBBILLNO", FNumber=FNumber)
-
-    deleteData(app3=app3, FTableName="RDS_ECS_ods_pur_return", field="FMRBBILLNO", FNumber=FNumber)
-
-    df = ecsinterface.writeSRC(FNumber=FNumber, FNumber2=FNumber, app3=app3, viewname="v_procurement_return",
-                               field="FMRBBILLNO")
-
-    df = df.fillna("")
-
-    returnrequest.insert_procurement_return(app2, app3, df)
+    DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_pur_return", field="FMRBBILLNO", FNumber=FNumber)
 
     return "修改成功"
 
@@ -2046,22 +1831,7 @@ def returnPurchaseStatus_upload(token,FNumber,FName="赛普集团新账套"):
     '采购退料单'
     app3 = RdClient(token=token)
 
-    sql = f"select * from rds_key_values where FName='{FName}'"
-
-    key = app3.select(sql)
-
-    app2 = RdClient(token=key[0]["FApp2"])
-
-    deleteData(app3=app3, FTableName="RDS_ECS_src_pur_return", field="FMRBBILLNO", FNumber=FNumber)
-
-    deleteData(app3=app3, FTableName="RDS_ECS_ods_pur_return", field="FMRBBILLNO", FNumber=FNumber)
-
-    df = ecsinterface.writeSRC(FNumber=FNumber, FNumber2=FNumber, app3=app3, viewname="v_procurement_return",
-                               field="FMRBBILLNO")
-
-    df = df.fillna("")
-
-    returnrequest.insert_procurement_return(app2, app3, df)
+    DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_pur_return", field="FMRBBILLNO", FNumber=FNumber)
 
     return "修改成功"
 
@@ -2072,36 +1842,271 @@ def assemblyDisStatus_upload(token,FNumber,FName="赛普集团新账套"):
 
     app3 = RdClient(token=token)
 
-    sql = f"select * from rds_key_values where FName='{FName}'"
-
-    key = app3.select(sql)
-
-    app2 = RdClient(token=key[0]["FApp2"])
-
-
     Status_upload(app3=app3, tablename="RDS_ECS_ods_DISASS_DELIVERY", field="FBillNo",
                          FNumber=FNumber)
-    
-    
     return "修改成功"
     
 
-def log_query(token,FNumber):
+def saleOrderLog_query(token,FNumber):
     '''
-    日志查询
+    销售订单日志查询
     :param app3:
     :param FNumber:
     :return:
     '''
     app3 = RdClient(token=token)
 
-    sql=f"""select * from RDS_ECS_Log where FNUMBER='{FNumber}'"""
+    sql=f"""select * from RDS_ECS_Log where FNUMBER='{FNumber}' and FProgramName='销售订单'"""
 
     res=app3.select(sql)
 
     df=pd.DataFrame(res)
 
     return df
+
+def purchaseOrderLog_query(token,FNumber):
+    '''
+    采购订单日志查询
+    :param app3:
+    :param FNumber:
+    :return:
+    '''
+    app3 = RdClient(token=token)
+
+    sql=f"""select * from RDS_ECS_Log where FNUMBER='{FNumber}' and FProgramName='采购订单'"""
+
+    res=app3.select(sql)
+
+    df=pd.DataFrame(res)
+
+    return df
+
+def noticeShipmentLog_query(token,FNumber):
+    '''
+    发货通知单日志查询
+    :param app3:
+    :param FNumber:
+    :return:
+    '''
+    app3 = RdClient(token=token)
+
+    sql=f"""select * from RDS_ECS_Log where FNUMBER='{FNumber}' and FProgramName='发货通知单'"""
+
+    res=app3.select(sql)
+
+    df=pd.DataFrame(res)
+
+    return df
+
+
+def receiptNoticeLog_query(token,FNumber):
+    '''
+    收料通知单日志查询
+    :param app3:
+    :param FNumber:
+    :return:
+    '''
+    app3 = RdClient(token=token)
+
+    sql=f"""select * from RDS_ECS_Log where FNUMBER='{FNumber}' and FProgramName='收料通知单'"""
+
+    res=app3.select(sql)
+
+    df=pd.DataFrame(res)
+
+    return df
+
+def saleOutLog_query(token,FNumber):
+    '''
+    销售出库单日志查询
+    :param app3:
+    :param FNumber:
+    :return:
+    '''
+    app3 = RdClient(token=token)
+
+    sql=f"""select * from RDS_ECS_Log where FNUMBER='{FNumber}' and FProgramName='销售出库单'"""
+
+    res=app3.select(sql)
+
+    df=pd.DataFrame(res)
+
+    return df
+
+def purchaseStorageLog_query(token,FNumber):
+    '''
+    采购入库单日志查询
+    :param app3:
+    :param FNumber:
+    :return:
+    '''
+    app3 = RdClient(token=token)
+
+    sql=f"""select * from RDS_ECS_Log where FNUMBER='{FNumber}' and FProgramName='采购入库单'"""
+
+    res=app3.select(sql)
+
+    df=pd.DataFrame(res)
+
+    return df
+
+
+def otherInStockLog_query(token,FNumber):
+    '''
+    其他入库单日志查询
+    :param app3:
+    :param FNumber:
+    :return:
+    '''
+    app3 = RdClient(token=token)
+
+    sql=f"""select * from RDS_ECS_Log where FNUMBER='{FNumber}' and FProgramName='其他入库单'"""
+
+    res=app3.select(sql)
+
+    df=pd.DataFrame(res)
+
+    return df
+
+def otherOutLog_query(token,FNumber):
+    '''
+    其他出库单日志查询
+    :param app3:
+    :param FNumber:
+    :return:
+    '''
+    app3 = RdClient(token=token)
+
+    sql=f"""select * from RDS_ECS_Log where FNUMBER='{FNumber}' and FProgramName='其他出库单'"""
+
+    res=app3.select(sql)
+
+    df=pd.DataFrame(res)
+
+    return df
+
+
+def salesBillingLog_query(token,FNumber):
+    '''
+    应收单日志查询
+    :param app3:
+    :param FNumber:
+    :return:
+    '''
+    app3 = RdClient(token=token)
+
+    sql=f"""select * from RDS_ECS_Log where FNUMBER='{FNumber}' and FProgramName='应收单'"""
+
+    res=app3.select(sql)
+
+    df=pd.DataFrame(res)
+
+    return df
+
+def purchasesBillingLog_query(token,FNumber):
+    '''
+    应付单日志查询
+    :param app3:
+    :param FNumber:
+    :return:
+    '''
+    app3 = RdClient(token=token)
+
+    sql=f"""select * from RDS_ECS_Log where FNUMBER='{FNumber}' and FProgramName='应付单'"""
+
+    res=app3.select(sql)
+
+    df=pd.DataFrame(res)
+
+    return df
+
+def returnNoticeLog_query(token,FNumber):
+    '''
+    退货通知单日志查询
+    :param app3:
+    :param FNumber:
+    :return:
+    '''
+    app3 = RdClient(token=token)
+
+    sql=f"""select * from RDS_ECS_Log where FNUMBER='{FNumber}' and FProgramName='退货通知单'"""
+
+    res=app3.select(sql)
+
+    df=pd.DataFrame(res)
+
+    return df
+
+
+def returnSaleLog_query(token,FNumber):
+    '''
+    销售退货单日志查询
+    :param app3:
+    :param FNumber:
+    :return:
+    '''
+    app3 = RdClient(token=token)
+
+    sql=f"""select * from RDS_ECS_Log where FNUMBER='{FNumber}' and FProgramName='销售退货单'"""
+
+    res=app3.select(sql)
+
+    df=pd.DataFrame(res)
+
+    return df
+
+def returnRequestLog_query(token,FNumber):
+    '''
+    退料申请单日志查询
+    :param app3:
+    :param FNumber:
+    :return:
+    '''
+    app3 = RdClient(token=token)
+
+    sql=f"""select * from RDS_ECS_Log where FNUMBER='{FNumber}' and FProgramName='退料申请单'"""
+
+    res=app3.select(sql)
+
+    df=pd.DataFrame(res)
+
+    return df
+
+
+def returnPurchaseLog_query(token,FNumber):
+    '''
+    采购退料单日志查询
+    :param app3:
+    :param FNumber:
+    :return:
+    '''
+    app3 = RdClient(token=token)
+
+    sql=f"""select * from RDS_ECS_Log where FNUMBER='{FNumber}' and FProgramName='采购退料单'"""
+
+    res=app3.select(sql)
+
+    df=pd.DataFrame(res)
+
+    return df
+
+def assemblyDisLog_query(token,FNumber):
+    '''
+    组装拆卸单日志查询
+    :param app3:
+    :param FNumber:
+    :return:
+    '''
+    app3 = RdClient(token=token)
+
+    sql=f"""select * from RDS_ECS_Log where FNUMBER='{FNumber}' and FProgramName='组装拆卸单'"""
+
+    res=app3.select(sql)
+
+    df=pd.DataFrame(res)
+
+    return df
+
 
 
 

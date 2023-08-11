@@ -268,6 +268,7 @@ def associated(app2,api_sdk,option,data,app3):
 
                     erro_list.append(save_result)
             else:
+                insertLog(app3, "收料通知单", str(i[0]['FGODOWNNO']), "数据同步成功", "1")
                 changeStatus(app3, str(i[0]['FGODOWNNO']), "3")
 
         except Exception as e:

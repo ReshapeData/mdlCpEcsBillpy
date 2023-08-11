@@ -937,21 +937,8 @@ def SaveAfterAllocation(api_sdk, i, app2, FNumber104, app3):
             insert_log(app3, res, FNumber104)
 
 # 名称入口
-def FNAME_get_supplier(fname_list):
+def FNAME_get_supplier(fname_list,app2,app3,option1):
     # 新账套
-    app2 = RdClient(token='9B6F803F-9D37-41A2-BDA0-70A7179AF0F3')
-    # app3 = RdClient(token='57DEDF26-5C00-4CA9-BBF7-57ECE07E179B')
-
-    app3 = RdClient(token='4D181CAB-4CE3-47A3-8F2B-8AB11BB6A227')
-    option1 = {
-        "acct_id": '62777efb5510ce',
-        "user_name": 'DMS',
-        "app_id": '235685_4e6vScvJUlAf4eyGRd3P078v7h0ZQCPH',
-        # "app_sec": 'd019b038bc3c4b02b962e1756f49e179',
-        "app_sec": 'b105890b343b40ba908ed51453940935',
-        # "server_url": 'http://192.168.1.13/K3Cloud',
-        "server_url": 'https://erp.cellprobio.com:10443/k3cloud',
-    }
 
     url = "https://kingdee-api.bioyx.cn/dynamic/query"
 
