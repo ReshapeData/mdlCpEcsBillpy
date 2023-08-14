@@ -783,97 +783,9 @@ def SaveAfterAllocation(api_sdk, i, app2, FNumber104, app3):
         print(f"修改编码为{FNumber104}的信息:" + res)
 
 
-# 时间入口
-def FCREATEDATE_get_ECS(starttime, endtime):
-    # 新账套，app2：DMS， app3：ERP
-    app2 = RdClient(token='9B6F803F-9D37-41A2-BDA0-70A7179AF0F3')
-    app3 = RdClient(token='57DEDF26-5C00-4CA9-BBF7-57ECE07E179B')
-    option1 = {
-        "acct_id": '62777efb5510ce',
-        "user_name": 'DMS',
-        "app_id": '235685_4e6vScvJUlAf4eyGRd3P078v7h0ZQCPH',
-        # "app_sec": 'd019b038bc3c4b02b962e1756f49e179',
-        "app_sec": 'b105890b343b40ba908ed51453940935',
-        # "server_url": 'http://cellprobio.gnway.cc/k3cloud',
-        "server_url": 'http://192.168.1.13/K3Cloud',
-    }
-
-    url = "https://kingdee-api.bioyx.cn/dynamic/query"
-
-    # res = ECS_post_info(url, 1, 1000, "ge", "v_customer_info", "2022-10-11", "FCREATEDATE")
-    res = ECS_post_info2(url, 1, 1000, "ge", "le", "v_customer_info", starttime, endtime, "FCREATEDATE")
-    # res.to_excel("D:\\EcsCustomer.xlsx")
-
-    if not res.empty:
-        for i in res.index:
-
-            data_address = ECS_post_info(url, 1, 1000, "eq", "v_customer_address", res.loc[i]['CUSTOMER_SEQ'],
-                                         "CUSTOMER_SEQ")
-            data_contact = ECS_post_info(url, 1, 1000, "eq", "v_customer_contact", res.loc[i]['CUSTOMER_SEQ'],
-                                         "CUSTOMER_SEQ")
-
-            if data_address.empty:
-                data_address = {}
-            else:
-                data_address = data_address.loc[0]
-
-            if data_contact.empty:
-                data_contact = {}
-            else:
-                data_contact = data_contact.loc[0]
-
-            data_info = res.loc[i]
-
-            data = combination(data_info, data_address, data_contact)
-
-            if data['FCOUNTRY'] == '中国' and data['FTAXREGISTERCODE'] == '':
-                ero = {'Result': {'ResponseStatus': {'Errors': [{'Message': '纳税登记号为空'}]}}}
-                insert_log(app2, ero, data['FNumber'])
-                print(f"{data['FName']}纳税登记号为空")
-                continue
-            if data['FTRADINGCURRNO'] == '':
-                ero = {'Result': {'ResponseStatus': {'Errors': [{'Message': '结算币别为空'}]}}}
-                insert_log(app2, ero, data['FNumber'])
-                print(f"{data['FName']}结算币别为空")
-                continue
-
-            sql = f"""select FName from RDS_ECS_SRC_BD_CUSTOMER"""
-            fdata = app2.select(sql)
-            fnames = []
-            for name_date in fdata:
-                fnames.append(name_date['FName'])
-
-            if data['FName'] not in fnames:
-                insert_data(app2, data)
-                print(f"{data['FNumber']}插入成功")
-            else:
-                print(f"{data['FNumber']}已存在数据库")
-    else:
-        print(f"请求数据为空")
-
-    # 写入金蝶
-    ecs_ods_erp(app2, app3, option1)
-
-
 # 名称入口
-def CUSTOMERNAME_get_ECS(CUSTOMERNAMES):
+def CUSTOMERNAME_get_ECS(CUSTOMERNAMES,app2,app3,option1):
     # 新账套
-
-    # 57DEDF26-5C00-4CA9-BBF7-57ECE07E179B
-
-    # 4D181CAB-4CE3-47A3-8F2B-8AB11BB6A227
-    app2 = RdClient(token='9B6F803F-9D37-41A2-BDA0-70A7179AF0F3')
-    app3 = RdClient(token='4D181CAB-4CE3-47A3-8F2B-8AB11BB6A227')
-    option1 = {
-        "acct_id": '62777efb5510ce',
-        "user_name": 'DMS',
-        "app_id": '235685_4e6vScvJUlAf4eyGRd3P078v7h0ZQCPH',
-        "app_sec": 'b105890b343b40ba908ed51453940935',
-        # "server_url": 'http://cellprobio.gnway.cc/k3cloud',
-        "server_url": 'https://erp.cellprobio.com:10443/k3cloud',
-
-    }
-
 
     url = "https://kingdee-api.bioyx.cn/dynamic/query"
 

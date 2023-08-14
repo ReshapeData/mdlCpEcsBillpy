@@ -1297,19 +1297,8 @@ def action(i, app2, api_sdk, app3):
 
 
 # 编码入口，app3中台，app2金蝶
-def performFNumber(codeList):
+def performFNumber(codeList,app2,app3,option1):
     # 新账套
-    app3 = RdClient(token='9B6F803F-9D37-41A2-BDA0-70A7179AF0F3')
-    app2 = RdClient(token='4D181CAB-4CE3-47A3-8F2B-8AB11BB6A227')
-    option1 = {
-        "acct_id": '62777efb5510ce',
-        "user_name": 'DMS',
-        "app_id": '235685_4e6vScvJUlAf4eyGRd3P078v7h0ZQCPH',
-        # "app_sec": 'd019b038bc3c4b02b962e1756f49e179',
-        "app_sec": 'b105890b343b40ba908ed51453940935',
-        "server_url": 'https://erp.cellprobio.com:10443/k3cloud',
-        # "server_url": 'http://192.168.1.13/K3Cloud',
-    }
 
     if type(codeList) == list:
 
@@ -1325,27 +1314,6 @@ def performFNumber(codeList):
 
     print("运行结束")
 
-
-if __name__ == '__main__':
-
-    performFNumber(['BC2024',
-'BC5048',
-'BC5062',
-'BC5042',
-'BC5049',
-'BC5050',
-'BC5052',
-'BC5135',
-'BC5130',
-'BC5126',
-'BC5122',
-'BC5092',
-'BC5088',
-'BC5139',
-'BC5147',
-'BC5005',
-'BC5040'
-])
 
 
 

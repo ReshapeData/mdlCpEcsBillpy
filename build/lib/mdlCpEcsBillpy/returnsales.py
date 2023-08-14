@@ -7,7 +7,8 @@ from k3cloud_webapi_sdk.main import K3CloudApiSdk
 from pyrda.dbms.rds import RdClient
 import pandas as pd
 
-def encryption(pageNum,pageSize,queryList,tableName):
+
+def encryption(pageNum, pageSize, queryList, tableName):
     '''
     ECS的token加密
     :param pageNum:
@@ -19,7 +20,7 @@ def encryption(pageNum,pageSize,queryList,tableName):
 
     m = hashlib.md5()
 
-    token=f'accessId=skyx@prod&accessKey=skyx@0512@1024@prod&pageNum={pageNum}&pageSize={pageSize}&queryList={queryList}&tableName={tableName}'
+    token = f'accessId=skyx@prod&accessKey=skyx@0512@1024@prod&pageNum={pageNum}&pageSize={pageSize}&queryList={queryList}&tableName={tableName}'
 
     m.update(token.encode())
 
@@ -28,7 +29,7 @@ def encryption(pageNum,pageSize,queryList,tableName):
     return md5
 
 
-def ECS_post_info2(url,pageNum,pageSize,qw,qw2,tableName,updateTime,updateTime2,key):
+def ECS_post_info2(url, pageNum, pageSize, qw, qw2, tableName, updateTime, updateTime2, key):
     '''
     生科云选API接口
     :param url: 地址
@@ -42,15 +43,15 @@ def ECS_post_info2(url,pageNum,pageSize,qw,qw2,tableName,updateTime,updateTime2,
 
     try:
 
-        queryList='[{"qw":'+f'"{qw}"'+',"value":'+f'"{updateTime}"'+',"key":'+f'"{key}"'+'},{"qw":'+f'"{qw2}"'+',"value":'+f'"{updateTime2}"'+',"key":'+f'"{key}"'+'}]'
+        queryList = '[{"qw":' + f'"{qw}"' + ',"value":' + f'"{updateTime}"' + ',"key":' + f'"{key}"' + '},{"qw":' + f'"{qw2}"' + ',"value":' + f'"{updateTime2}"' + ',"key":' + f'"{key}"' + '}]'
 
         # 查询条件
-        queryList1=[{"qw":qw,"value":updateTime,"key":key},{"qw":qw2,"value":updateTime2,"key":key}]
+        queryList1 = [{"qw": qw, "value": updateTime, "key": key}, {"qw": qw2, "value": updateTime2, "key": key}]
 
         # 查询的表名
-        tableName=tableName
+        tableName = tableName
 
-        data ={
+        data = {
             "tableName": tableName,
             "pageNum": pageNum,
             "pageSize": pageSize,
@@ -63,7 +64,7 @@ def ECS_post_info2(url,pageNum,pageSize,qw,qw2,tableName,updateTime,updateTime2,
             'Content-Type': 'application/json',
         }
 
-        response = requests.post(url, headers=headers,data=data)
+        response = requests.post(url, headers=headers, data=data)
 
         info = response.json()
 
@@ -76,7 +77,7 @@ def ECS_post_info2(url,pageNum,pageSize,qw,qw2,tableName,updateTime,updateTime2,
         return pd.DataFrame()
 
 
-def viewPage(url,pageNum,pageSize,qw,qw2,tableName,updateTime,updateTime2,key):
+def viewPage(url, pageNum, pageSize, qw, qw2, tableName, updateTime, updateTime2, key):
     '''
     生科云选API接口
     :param url: 地址
@@ -90,15 +91,15 @@ def viewPage(url,pageNum,pageSize,qw,qw2,tableName,updateTime,updateTime2,key):
 
     try:
 
-        queryList='[{"qw":'+f'"{qw}"'+',"value":'+f'"{updateTime}"'+',"key":'+f'"{key}"'+'},{"qw":'+f'"{qw2}"'+',"value":'+f'"{updateTime2}"'+',"key":'+f'"{key}"'+'}]'
+        queryList = '[{"qw":' + f'"{qw}"' + ',"value":' + f'"{updateTime}"' + ',"key":' + f'"{key}"' + '},{"qw":' + f'"{qw2}"' + ',"value":' + f'"{updateTime2}"' + ',"key":' + f'"{key}"' + '}]'
 
         # 查询条件
-        queryList1=[{"qw":qw,"value":updateTime,"key":key},{"qw":qw2,"value":updateTime2,"key":key}]
+        queryList1 = [{"qw": qw, "value": updateTime, "key": key}, {"qw": qw2, "value": updateTime2, "key": key}]
 
         # 查询的表名
-        tableName=tableName
+        tableName = tableName
 
-        data ={
+        data = {
             "tableName": tableName,
             "pageNum": pageNum,
             "pageSize": pageSize,
@@ -111,7 +112,7 @@ def viewPage(url,pageNum,pageSize,qw,qw2,tableName,updateTime,updateTime2,key):
             'Content-Type': 'application/json',
         }
 
-        response = requests.post(url, headers=headers,data=data)
+        response = requests.post(url, headers=headers, data=data)
 
         info = response.json()
 
@@ -122,10 +123,7 @@ def viewPage(url,pageNum,pageSize,qw,qw2,tableName,updateTime,updateTime2,key):
         return 0
 
 
-
-
-def associated(app2,api_sdk,option,data,app3):
-
+def associated(app2, api_sdk, option, data, app3):
     erro_list = []
     sucess_num = 0
     erro_num = 0
@@ -137,120 +135,125 @@ def associated(app2,api_sdk,option,data,app3):
 
         # try:
 
-            if check_outstock_exists(api_sdk,i[0]['FMRBBILLNO'])!=True:
+        if check_outstock_exists(api_sdk, i[0]['FMRBBILLNO']) != True:
 
-                    model = {
-                            "InterationFlags": "STK_InvCheckResult",
-                            "Model": {
-                                "FID": 0,
-                                "FBillTypeID": {
-                                    "FNUMBER": "XSTHD01_SYS"
-                                },
-                                "FBillNo": str(i[0]['FMRBBILLNO']),
-                                "FDate": str(i[0]['OPTRPTENTRYDATE']),
-                                "FSaleOrgId": {
-                                    "FNumber": "104"
-                                },
-                                "FRetcustId": {
-                                    "FNumber": code_conversion(app2,"rds_vw_customer","FNAME",i[0]['FCUSTOMNAME'])
-                                },
-                                "F_SZSP_Remarks": "其他",
-                                "FSalesGroupID": {
-                                    "FNumber": "SKYX01"
-                                },
-                                "FSalesManId": {
-                                    "FNumber": code_conversion_org(app2, "rds_vw_salesman", "FNAME", i[0]['FSALER'],
-                                                                   '104', "FNUMBER")
-                                },
-                                # "FHeadLocId": {
-                                #     "FNumber": "BIZ202103081651391"
-                                # },
-                                "FTransferBizType": {
-                                    "FNumber": "OverOrgSal"
-                                },
-                                "FStockOrgId": {
-                                    "FNumber": "104"
-                                },
-                                "FStockDeptId": {
-                                    "FNumber": "BM000040"
-                                },
-                                "FStockerGroupId": {
-                                    "FNumber": "SKCKZ01"
-                                },
-                                "FStockerId": {
-                                    "FNumber": "BSP00040"
-                                },
-                                "FReceiveCustId": {
-                                    "FNumber": code_conversion(app2,"rds_vw_customer","FNAME",i[0]['FCUSTOMNAME'])
-                                },
-                                # "FReceiveAddress": "江苏生物镇江市京口区丁卯街道经十五路99号科技园江苏金斯瑞生物科技有限公司",
-                                "FSettleCustId": {
-                                    "FNumber": code_conversion(app2,"rds_vw_customer","FNAME",i[0]['FCUSTOMNAME'])
-                                },
-                                "FPayCustId": {
-                                    "FNumber": code_conversion(app2,"rds_vw_customer","FNAME",i[0]['FCUSTOMNAME'])
-                                },
-                                "FOwnerTypeIdHead": "BD_OwnerOrg",
-                                "FIsTotalServiceOrCost": False,
-                                # "FLinkPhone": "13770535847",
-                                "SubHeadEntity": {
-                                    "FSettleCurrId": {
-                                        "FNumber": "PRE001" if i[0]['FCurrencyName']=="" else code_conversion(app2,"rds_vw_currency","FNAME",i[0]['FCurrencyName'])
-                                    },
-                                    "FSettleOrgId": {
-                                        "FNumber": "104"
-                                    },
-                                    "FLocalCurrId": {
-                                        "FNumber": "PRE001"
-                                    },
-                                    "FExchangeTypeId": {
-                                        "FNumber": "HLTX01_SYS"
-                                    },
-                                    "FExchangeRate": 1.0
-                                },
-                                "FEntity": data_splicing(app2,api_sdk,i,i[0]['FMRBBILLNO'])
-                            }
-                        }
-                    res = json.loads(api_sdk.Save("SAL_RETURNSTOCK", model))
+            model = {
+                "InterationFlags": "STK_InvCheckResult",
+                "Model": {
+                    "FID": 0,
+                    "FBillTypeID": {
+                        "FNUMBER": "XSTHD01_SYS"
+                    },
+                    "FBillNo": str(i[0]['FMRBBILLNO']),
+                    "FDate": str(i[0]['OPTRPTENTRYDATE']),
+                    "FSaleOrgId": {
+                        "FNumber": "104"
+                    },
+                    "FRetcustId": {
+                        "FNumber": code_conversion(app2, "rds_vw_customer", "FNAME", i[0]['FCUSTOMNAME'])
+                    },
+                    "F_SZSP_Remarks": "其他",
+                    "FSalesGroupID": {
+                        "FNumber": "SKYX01"
+                    },
+                    "FSalesManId": {
+                        "FNumber": code_conversion_org(app2, "rds_vw_salesman", "FNAME", i[0]['FSALER'],
+                                                       '104', "FNUMBER")
+                    },
+                    # "FHeadLocId": {
+                    #     "FNumber": "BIZ202103081651391"
+                    # },
+                    "FTransferBizType": {
+                        "FNumber": "OverOrgSal"
+                    },
+                    "FStockOrgId": {
+                        "FNumber": "104"
+                    },
+                    "FStockDeptId": {
+                        "FNumber": "BM000040"
+                    },
+                    "FStockerGroupId": {
+                        "FNumber": "SKCKZ01"
+                    },
+                    "FStockerId": {
+                        "FNumber": "BSP00040"
+                    },
+                    "FReceiveCustId": {
+                        "FNumber": code_conversion(app2, "rds_vw_customer", "FNAME", i[0]['FCUSTOMNAME'])
+                    },
+                    # "FReceiveAddress": "江苏生物镇江市京口区丁卯街道经十五路99号科技园江苏金斯瑞生物科技有限公司",
+                    "FSettleCustId": {
+                        "FNumber": code_conversion(app2, "rds_vw_customer", "FNAME", i[0]['FCUSTOMNAME'])
+                    },
+                    "FPayCustId": {
+                        "FNumber": code_conversion(app2, "rds_vw_customer", "FNAME", i[0]['FCUSTOMNAME'])
+                    },
+                    "FOwnerTypeIdHead": "BD_OwnerOrg",
+                    "FIsTotalServiceOrCost": False,
+                    # "FLinkPhone": "13770535847",
+                    "SubHeadEntity": {
+                        "FSettleCurrId": {
+                            "FNumber": "PRE001" if i[0]['FCurrencyName'] == "" else code_conversion(app2,
+                                                                                                    "rds_vw_currency",
+                                                                                                    "FNAME", i[0][
+                                                                                                        'FCurrencyName'])
+                        },
+                        "FSettleOrgId": {
+                            "FNumber": "104"
+                        },
+                        "FLocalCurrId": {
+                            "FNumber": "PRE001"
+                        },
+                        "FExchangeTypeId": {
+                            "FNumber": "HLTX01_SYS"
+                        },
+                        "FExchangeRate": 1.0
+                    },
+                    "FEntity": data_splicing(app2, api_sdk, i, i[0]['FMRBBILLNO'])
+                }
+            }
+            res = json.loads(api_sdk.Save("SAL_RETURNSTOCK", model))
 
-                    if res['Result']['ResponseStatus']['IsSuccess']:
+            if res['Result']['ResponseStatus']['IsSuccess']:
 
-                        submit_res = ERP_submit(api_sdk, str(i[0]['FMRBBILLNO']))
+                submit_res = ERP_submit(api_sdk, str(i[0]['FMRBBILLNO']))
 
-                        if submit_res:
+                if submit_res:
 
-                            audit_res = ERP_Audit(api_sdk, str(i[0]['FMRBBILLNO']))
+                    audit_res = ERP_Audit(api_sdk, str(i[0]['FMRBBILLNO']))
 
-                            if audit_res:
+                    if audit_res:
 
-                                insertLog(app3, "销售退货单", i[0]['FMRBBILLNO'], "数据同步成功", "1")
+                        insertLog(app3, "销售退货单", i[0]['FMRBBILLNO'], "数据同步成功", "1")
 
-                                changeStatus(app3,str(i[0]['FMRBBILLNO']),"1")
+                        changeStatus(app3, str(i[0]['FMRBBILLNO']), "1")
 
-                                sucess_num=sucess_num+1
-
-                            else:
-                                changeStatus(app3,str(i[0]['FMRBBILLNO']),"2")
-
-                        else:
-                            changeStatus(app3,str(i[0]['FMRBBILLNO']),"2")
+                        sucess_num = sucess_num + 1
 
                     else:
+                        changeStatus(app3, str(i[0]['FMRBBILLNO']), "2")
 
-                        insertLog(app3, "销售退货单", i[0]['FMRBBILLNO'],res['Result']['ResponseStatus']['Errors'][0]['Message'],"2")
+                else:
+                    changeStatus(app3, str(i[0]['FMRBBILLNO']), "2")
 
-                        changeStatus(app3,str(i[0]['FMRBBILLNO']),"2")
-
-                        erro_num=erro_num+1
-
-                        erro_list.append(res)
             else:
-                changeStatus(app3, str(i[0]['FMRBBILLNO']), "1")
 
-        # except Exception as e:
-        #
-        #     insertLog(app3, "销售退货单", i[0]['FMRBBILLNO'],"数据异常","2")
+                insertLog(app3, "销售退货单", i[0]['FMRBBILLNO'], res['Result']['ResponseStatus']['Errors'][0]['Message'],
+                          "2")
 
+                changeStatus(app3, str(i[0]['FMRBBILLNO']), "2")
+
+                erro_num = erro_num + 1
+
+                erro_list.append(res)
+        else:
+            changeStatus(app3, str(i[0]['FMRBBILLNO']), "1")
+
+            insertLog(app3, "销售退货单", i[0]['FMRBBILLNO'], "数据同步成功", "1")
+
+    # except Exception as e:
+    #
+    #     insertLog(app3, "销售退货单", i[0]['FMRBBILLNO'],"数据异常","2")
 
     dict = {
         "sucessNum": sucess_num,
@@ -261,8 +264,7 @@ def associated(app2,api_sdk,option,data,app3):
     return dict
 
 
-
-def check_outstock_exists(api_sdk,FNumber):
+def check_outstock_exists(api_sdk, FNumber):
     '''
     查看订单是否在ERP系统存在
     :param api: API接口对象
@@ -270,20 +272,20 @@ def check_outstock_exists(api_sdk,FNumber):
     :return:
     '''
 
-    model={
-            "CreateOrgId": 0,
-            "Number": FNumber,
-            "Id": "",
-            "IsSortBySeq": "false"
-        }
+    model = {
+        "CreateOrgId": 0,
+        "Number": FNumber,
+        "Id": "",
+        "IsSortBySeq": "false"
+    }
 
-    res=json.loads(api_sdk.View("SAL_RETURNSTOCK",model))
+    res = json.loads(api_sdk.View("SAL_RETURNSTOCK", model))
 
     return res['Result']['ResponseStatus']['IsSuccess']
 
-def ERP_submit(api_sdk,FNumber):
 
-    model={
+def ERP_submit(api_sdk, FNumber):
+    model = {
         "CreateOrgId": 0,
         "Numbers": [FNumber],
         "Ids": "",
@@ -292,11 +294,12 @@ def ERP_submit(api_sdk,FNumber):
         "IgnoreInterationFlag": ""
     }
 
-    res=json.loads(api_sdk.Submit("SAL_RETURNSTOCK",model))
+    res = json.loads(api_sdk.Submit("SAL_RETURNSTOCK", model))
 
     return res['Result']['ResponseStatus']['IsSuccess']
 
-def ERP_Audit(api_sdk,FNumber):
+
+def ERP_Audit(api_sdk, FNumber):
     '''
     将订单审核
     :param api_sdk: API接口对象
@@ -304,7 +307,7 @@ def ERP_Audit(api_sdk,FNumber):
     :return:
     '''
 
-    model={
+    model = {
         "CreateOrgId": 0,
         "Numbers": [FNumber],
         "Ids": "",
@@ -318,16 +321,21 @@ def ERP_Audit(api_sdk,FNumber):
 
     return res['Result']['ResponseStatus']['IsSuccess']
 
-def delivery_view(api_sdk,value):
+
+def delivery_view(api_sdk, value):
     '''
     销售订单单据查询
     :param value: 订单编码
     :return:
     '''
 
-    res=json.loads(api_sdk.ExecuteBillQuery({"FormId": "SAL_RETURNNOTICE", "FieldKeys": "FDate,FBillNo,FId,FEntity_FENTRYID", "FilterString": [{"Left":"(","FieldName":"FBillNo","Compare":"=","Value":value,"Right":")","Logic":"AND"}], "TopRowCount": 0}))
+    res = json.loads(api_sdk.ExecuteBillQuery(
+        {"FormId": "SAL_RETURNNOTICE", "FieldKeys": "FDate,FBillNo,FId,FEntity_FENTRYID", "FilterString": [
+            {"Left": "(", "FieldName": "FBillNo", "Compare": "=", "Value": value, "Right": ")", "Logic": "AND"}],
+         "TopRowCount": 0}))
 
     return res
+
 
 def getCode(app3):
     '''
@@ -336,13 +344,14 @@ def getCode(app3):
     :return:
     '''
 
-    sql="select distinct FMRBBILLNO from RDS_ECS_ODS_sal_returnstock where FIsdo=3 and FIsFree!=1"
+    sql = "select distinct FMRBBILLNO from RDS_ECS_ODS_sal_returnstock where FIsdo=3 and FIsFree!=1"
 
-    res=app3.select(sql)
+    res = app3.select(sql)
 
     return res
 
-def getClassfyData(app3,code):
+
+def getClassfyData(app3, code):
     '''
     获得分类数据
     :param app2:
@@ -350,16 +359,14 @@ def getClassfyData(app3,code):
     :return:
     '''
 
+    sql = f"select FMRBBILLNO,FTRADENO,FSALEORDERENTRYSEQ,FBILLTYPE,FRETSALESTATE,FPRDRETURNSTATUS,OPTRPTENTRYDATE,FSTOCK,FCUSTNUMBER,FCUSTOMNAME,FCUSTCODE,FPrdNumber,FPrdName,FRETSALEPRICE,FRETURNQTY,FREQUESTTIME,FBUSINESSDATE,FCOSTPRICE,FMEASUREUNIT,FRETAMOUNT,FTAXRATE,FLOT,FSALER,FAUXSALER,FSUMSUPPLIERLOT,FPRODUCEDATE,FEFFECTIVEDATE,FCHECKSTATUS,UPDATETIME,FDELIVERYNO,FIsDo,FIsFree,FADDID,FCurrencyName,FReturnTime from RDS_ECS_ODS_sal_returnstock where FMRBBILLNO='{code['FMRBBILLNO']}'"
 
-    sql=f"select FMRBBILLNO,FTRADENO,FSALEORDERENTRYSEQ,FBILLTYPE,FRETSALESTATE,FPRDRETURNSTATUS,OPTRPTENTRYDATE,FSTOCK,FCUSTNUMBER,FCUSTOMNAME,FCUSTCODE,FPrdNumber,FPrdName,FRETSALEPRICE,FRETURNQTY,FREQUESTTIME,FBUSINESSDATE,FCOSTPRICE,FMEASUREUNIT,FRETAMOUNT,FTAXRATE,FLOT,FSALER,FAUXSALER,FSUMSUPPLIERLOT,FPRODUCEDATE,FEFFECTIVEDATE,FCHECKSTATUS,UPDATETIME,FDELIVERYNO,FIsDo,FIsFree,FADDID,FCurrencyName,FReturnTime from RDS_ECS_ODS_sal_returnstock where FMRBBILLNO='{code['FMRBBILLNO']}'"
-
-    res=app3.select(sql)
+    res = app3.select(sql)
 
     return res
 
 
-
-def changeStatus(app3,fnumber,status):
+def changeStatus(app3, fnumber, status):
     '''
     将没有写入的数据状态改为2
     :param app2: 执行sql语句对象
@@ -368,12 +375,12 @@ def changeStatus(app3,fnumber,status):
     :return:
     '''
 
-    sql=f"update a set a.FIsdo={status} from RDS_ECS_ODS_sal_returnstock a where FMRBBILLNO='{fnumber}'"
+    sql = f"update a set a.FIsdo={status} from RDS_ECS_ODS_sal_returnstock a where FMRBBILLNO='{fnumber}'"
 
     app3.update(sql)
 
 
-def code_conversion(app2,tableName,param,param2):
+def code_conversion(app2, tableName, param, param2):
     '''
     通过ECS物料编码来查询系统内的编码
     :param app2: 数据库操作对象
@@ -383,11 +390,11 @@ def code_conversion(app2,tableName,param,param2):
     :return:
     '''
 
-    sql=f"select FNumber from {tableName} where {param}='{param2}'"
+    sql = f"select FNumber from {tableName} where {param}='{param2}'"
 
-    res=app2.select(sql)
+    res = app2.select(sql)
 
-    if res==[]:
+    if res == []:
 
         return ""
 
@@ -395,7 +402,8 @@ def code_conversion(app2,tableName,param,param2):
 
         return res[0]['FNumber']
 
-def code_conversion_org(app2,tableName,param,param2,param3,param4):
+
+def code_conversion_org(app2, tableName, param, param2, param3, param4):
     '''
     通过ECS物料编码来查询系统内的编码
     :param app2: 数据库操作对象
@@ -405,11 +413,11 @@ def code_conversion_org(app2,tableName,param,param2,param3,param4):
     :return:
     '''
 
-    sql=f"select {param4} from {tableName} where {param}='{param2}' and FOrgNumber='{param3}'"
+    sql = f"select {param4} from {tableName} where {param}='{param2}' and FOrgNumber='{param3}'"
 
-    res=app2.select(sql)
+    res = app2.select(sql)
 
-    if res==[]:
+    if res == []:
 
         return ""
 
@@ -418,9 +426,8 @@ def code_conversion_org(app2,tableName,param,param2,param3,param4):
         return res[0][param4]
 
 
-def isbatch(app2,FNumber):
-
-    sql=f"select FISBATCHMANAGE from rds_vw_fisbatch where F_SZSP_SKUNUMBER='{FNumber}'"
+def isbatch(app2, FNumber):
+    sql = f"select FISBATCHMANAGE from rds_vw_fisbatch where F_SZSP_SKUNUMBER='{FNumber}'"
 
     res = app2.select(sql)
 
@@ -474,7 +481,7 @@ def checkDataExist(app2, FADDID):
         return False
 
 
-def insert_sales_return(app2,data):
+def insert_sales_return(app2, data):
     '''
     销售退货
     :param app2:
@@ -482,20 +489,15 @@ def insert_sales_return(app2,data):
     :return:
     '''
 
-
     for i in data.index:
 
-        if checkDataExist(app2,data.iloc[i]['FADDID']):
-
+        if checkDataExist(app2, data.iloc[i]['FADDID']):
             sql = f"insert into RDS_ECS_SRC_sal_returnstock(FMRBBILLNO,FTRADENO,FSALEORDERENTRYSEQ,FBILLTYPE,FRETSALESTATE,FPRDRETURNSTATUS,OPTRPTENTRYDATE,FSTOCK,FCUSTNUMBER,FCUSTOMNAME,FCUSTCODE,FPrdNumber,FPrdName,FRETSALEPRICE,FRETURNQTY,FREQUESTTIME,FBUSINESSDATE,FCOSTPRICE,FMEASUREUNIT,FRETAMOUNT,FTAXRATE,FLOT,FSALER,FAUXSALER,FSUMSUPPLIERLOT,FPRODUCEDATE,FEFFECTIVEDATE,FCHECKSTATUS,UPDATETIME,FDELIVERYNO,FIsDo,FIsFree,FADDID,FCurrencyName) values('{data.iloc[i]['FMRBBILLNO']}','{data.iloc[i]['FTRADENO']}','{data.iloc[i]['FSALEORDERENTRYSEQ']}','{data.iloc[i]['FBILLTYPEID']}','{data.iloc[i]['FRETSALESTATE']}','{data.iloc[i]['FPRDRETURNSTATUS']}','{data.iloc[i]['OPTRPTENTRYDATE']}','{data.iloc[i]['FSTOCKID']}','{data.iloc[i]['FCUSTNUMBER']}','{data.iloc[i]['FCUSTOMNAME']}','{data.iloc[i]['FCUSTCODE']}','{data.iloc[i]['FPRDNUMBER']}','{data.iloc[i]['FPRDNAME']}','{data.iloc[i]['FRETSALEPRICE']}','{data.iloc[i]['FRETURNQTY']}','{data.iloc[i]['FREQUESTTIME']}','{data.iloc[i]['FBUSINESSDATE']}','{data.iloc[i]['FCOSTPRICE']}','{data.iloc[i]['FMEASUREUNITID']}','{data.iloc[i]['FRETAMOUNT']}','{data.iloc[i]['FTAXRATE']}','{data.iloc[i]['FLOT']}','{data.iloc[i]['FSALERID']}','{data.iloc[i]['FAUXSALERID']}','{data.iloc[i]['FSUMSUPPLIERLOT']}','{data.iloc[i]['FPRODUCEDATE']}','{data.iloc[i]['FEFFECTIVEDATE']}','{data.iloc[i]['FCHECKSTATUS']}',getdate(),'{data.iloc[i]['FDELIVERYNO']}',0,0,'{data.iloc[i]['FADDID']}','{data.iloc[i]['FCURRENCYID']}')"
 
             app2.insert(sql)
 
 
-
-
-
-def insertLog(app2,FProgramName,FNumber,Message,FIsdo,cp='赛普'):
+def insertLog(app2, FProgramName, FNumber, Message, FIsdo, cp='赛普'):
     '''
     异常数据日志
     :param app2:
@@ -504,25 +506,24 @@ def insertLog(app2,FProgramName,FNumber,Message,FIsdo,cp='赛普'):
     :return:
     '''
 
-    sql="insert into RDS_ECS_Log(FProgramName,FNumber,FMessage,FOccurrenceTime,FCompanyName,FIsdo) values('"+FProgramName+"','"+FNumber+"','"+Message+"',getdate(),'"+cp+"','"+FIsdo+"')"
+    sql = "insert into RDS_ECS_Log(FProgramName,FNumber,FMessage,FOccurrenceTime,FCompanyName,FIsdo) values('" + FProgramName + "','" + FNumber + "','" + Message + "',getdate(),'" + cp + "','" + FIsdo + "')"
 
     app2.insert(sql)
 
 
-
-
-def classification_process(app3,data):
+def classification_process(app3, data):
     '''
     将编码进行去重，然后进行分类
     :param data:
     :return:
     '''
 
-    res=fuz(app3,data)
+    res = fuz(app3, data)
 
     return res
 
-def fuz(app3,codeList):
+
+def fuz(app3, codeList):
     '''
     通过编码分类，将分类好的数据装入列表
     :param app2:
@@ -530,18 +531,17 @@ def fuz(app3,codeList):
     :return:
     '''
 
-    singleList=[]
+    singleList = []
 
     for i in codeList:
-
-        data=getClassfyData(app3,i)
+        data = getClassfyData(app3, i)
 
         singleList.append(data)
 
     return singleList
 
 
-def iskfperiod(app2,FNumber):
+def iskfperiod(app2, FNumber):
     '''
     查看物料是否启用保质期
     :param app2:
@@ -549,11 +549,11 @@ def iskfperiod(app2,FNumber):
     :return:
     '''
 
-    sql=f"select FISKFPERIOD from rds_vw_fiskfperiod where F_SZSP_SKUNUMBER='{FNumber}'"
+    sql = f"select FISKFPERIOD from rds_vw_fiskfperiod where F_SZSP_SKUNUMBER='{FNumber}'"
 
-    res=app2.select(sql)
+    res = app2.select(sql)
 
-    if res==[]:
+    if res == []:
 
         return ""
 
@@ -562,108 +562,110 @@ def iskfperiod(app2,FNumber):
         return res[0]['FISKFPERIOD']
 
 
-def data_splicing(app2,api_sdk,data,FNumber):
+def data_splicing(app2, api_sdk, data, FNumber):
     '''
     将订单内的物料进行遍历组成一个列表，然后将结果返回给 FSaleOrderEntry
     :param data:
     :return:
     '''
 
-    result=delivery_view(api_sdk,FNumber)
+    result = delivery_view(api_sdk, FNumber)
 
-    list=[]
+    list = []
 
-    if result != [] and len(result)==len(data):
+    if result != [] and len(result) == len(data):
 
-        index=0
+        index = 0
 
         for i in data:
+            list.append(json_model(app2, i, result[index]))
 
-            list.append(json_model(app2,i,result[index]))
-
-            index=index+1
+            index = index + 1
 
         return list
     else:
         return []
 
 
-
-def json_model(app2,model_data,value):
-
+def json_model(app2, model_data, value):
     # try:
 
-        if model_data['FPrdNumber'] == '1' or code_conversion(app2, "rds_vw_material", "F_SZSP_SKUNUMBER", model_data['FPrdNumber'])!="":
+    if model_data['FPrdNumber'] == '1' or code_conversion(app2, "rds_vw_material", "F_SZSP_SKUNUMBER",
+                                                          model_data['FPrdNumber']) != "":
 
-            model = {
-                    "FRowType": "Standard" if model_data['FPrdNumber'] != '1' else "Service",
-                    "FMaterialId": {
-                        "FNumber": "7.1.000001" if model_data['FPrdNumber'] == '1' else str(code_conversion(app2, "rds_vw_material", "F_SZSP_SKUNUMBER", model_data['FPrdNumber']))
-                    },
-                    # "FUnitID": {
-                    #     "FNumber": "01"
-                    # },
-                    "FRealQty": str(model_data['FRETURNQTY']),
-                    "FTaxPrice": str(model_data['FRETSALEPRICE']),
-                    "FEntryTaxRate": float(model_data['FTAXRATE']) * 100,
-                    "FIsFree": True if float(model_data['FIsFree'])== 1 else False,
-                    "FReturnType": {
-                        "FNumber": "THLX01_SYS"
-                    },
-                    "FOwnerTypeId": "BD_OwnerOrg",
-                    "FOwnerId": {
-                        "FNumber": "104"
-                    },
-                    "FStockId": {
-                        "FNumber": "SK01" if model_data['FSTOCK']=='苏州总仓' or model_data['FSTOCK']=='样品仓' else code_conversion(app2,"rds_vw_warehouse","FNAME",model_data['FSTOCK'])
-                    },
-                    "FStockstatusId": {
-                        "FNumber": "KCZT01_SYS"
-                    },
+        model = {
+            "FRowType": "Standard" if model_data['FPrdNumber'] != '1' else "Service",
+            "FMaterialId": {
+                "FNumber": "7.1.000001" if model_data['FPrdNumber'] == '1' else str(
+                    code_conversion(app2, "rds_vw_material", "F_SZSP_SKUNUMBER", model_data['FPrdNumber']))
+            },
+            # "FUnitID": {
+            #     "FNumber": "01"
+            # },
+            "FRealQty": str(model_data['FRETURNQTY']),
+            "FTaxPrice": str(model_data['FRETSALEPRICE']),
+            "FEntryTaxRate": float(model_data['FTAXRATE']) * 100,
+            "FIsFree": True if float(model_data['FIsFree']) == 1 else False,
+            "FReturnType": {
+                "FNumber": "THLX01_SYS"
+            },
+            "FOwnerTypeId": "BD_OwnerOrg",
+            "FOwnerId": {
+                "FNumber": "104"
+            },
+            "FStockId": {
+                "FNumber": "SK01" if model_data['FSTOCK'] == '苏州总仓' or model_data[
+                    'FSTOCK'] == '样品仓' else code_conversion(app2, "rds_vw_warehouse", "FNAME", model_data['FSTOCK'])
+            },
+            "FStockstatusId": {
+                "FNumber": "KCZT01_SYS"
+            },
 
-                    "FProduceDate": str(model_data['FPRODUCEDATE']) if iskfperiod(app2,
-                                                                                  model_data['FPrdNumber']) == '1' else "",
-                    "FExpiryDate": str(model_data['FEFFECTIVEDATE']) if iskfperiod(app2,
-                                                                                   model_data['FPrdNumber']) == '1' else "",
-                    "FLot": {
-                        "FNumber": str(model_data['FLOT']) if isbatch(app2,model_data['FPrdNumber'])=='1' else ""
-                    },
-                    "FDeliveryDate": str(model_data['FReturnTime']),
-                    # "FSalUnitID": {
-                    #     "FNumber": "01"
-                    # },
-                    "FSalUnitQty": str(model_data['FRETURNQTY']),
-                    "FSalBaseQty": str(model_data['FRETURNQTY']),
-                    "FPriceBaseQty": str(model_data['FRETURNQTY']),
-                    "FIsOverLegalOrg": False,
-                    "FARNOTJOINQTY": str(model_data['FRETURNQTY']),
-                    "FIsReturnCheck": False,
-                    "F_SZSP_ReleaseFlag": False,
-                    "FSettleBySon": False,
-                    "FMaterialID_Sal": {
-                        "FNUMBER": "7.1.000001" if model_data['FPrdNumber'] == '1' else str(code_conversion(app2, "rds_vw_material", "F_SZSP_SKUNUMBER", model_data['FPrdNumber']))
-                    },
-                    "FEntity_Link": [{
-                        "FEntity_Link_FRuleId ": "SalReturnNotice-SalReturnStock",
-                        "FEntity_Link_FSTableName ": "T_SAL_RETURNNOTICEENTRY",
-                        "FEntity_Link_FSBillId ": str(value[2]),
-                        "FEntity_Link_FSId ": str(value[3]),
-                        "FEntity_Link_FBaseUnitQtyOld ": str(model_data['FRETURNQTY']),
-                        "FEntity_Link_FBaseUnitQty ": str(model_data['FRETURNQTY']),
-                        "FEntity_Link_FSalBaseQtyOld ": str(model_data['FRETURNQTY']),
-                        "FEntity_Link_FSalBaseQty ": str(model_data['FRETURNQTY']),
-                        "FEntity_Link_FAuxUnitQtyOld":str(model_data['FRETURNQTY']),
-                        "FEntity_Link_FAuxUnitQty":str(model_data['FRETURNQTY'])
-                    }]
-                }
+            "FProduceDate": str(model_data['FPRODUCEDATE']) if iskfperiod(app2,
+                                                                          model_data['FPrdNumber']) == '1' else "",
+            "FExpiryDate": str(model_data['FEFFECTIVEDATE']) if iskfperiod(app2,
+                                                                           model_data['FPrdNumber']) == '1' else "",
+            "FLot": {
+                "FNumber": str(model_data['FLOT']) if isbatch(app2, model_data['FPrdNumber']) == '1' else ""
+            },
+            "FDeliveryDate": str(model_data['FReturnTime']),
+            # "FSalUnitID": {
+            #     "FNumber": "01"
+            # },
+            "FSalUnitQty": str(model_data['FRETURNQTY']),
+            "FSalBaseQty": str(model_data['FRETURNQTY']),
+            "FPriceBaseQty": str(model_data['FRETURNQTY']),
+            "FIsOverLegalOrg": False,
+            "FARNOTJOINQTY": str(model_data['FRETURNQTY']),
+            "FIsReturnCheck": False,
+            "F_SZSP_ReleaseFlag": False,
+            "FSettleBySon": False,
+            "FMaterialID_Sal": {
+                "FNUMBER": "7.1.000001" if model_data['FPrdNumber'] == '1' else str(
+                    code_conversion(app2, "rds_vw_material", "F_SZSP_SKUNUMBER", model_data['FPrdNumber']))
+            },
+            "FEntity_Link": [{
+                "FEntity_Link_FRuleId ": "SalReturnNotice-SalReturnStock",
+                "FEntity_Link_FSTableName ": "T_SAL_RETURNNOTICEENTRY",
+                "FEntity_Link_FSBillId ": str(value[2]),
+                "FEntity_Link_FSId ": str(value[3]),
+                "FEntity_Link_FBaseUnitQtyOld ": str(model_data['FRETURNQTY']),
+                "FEntity_Link_FBaseUnitQty ": str(model_data['FRETURNQTY']),
+                "FEntity_Link_FSalBaseQtyOld ": str(model_data['FRETURNQTY']),
+                "FEntity_Link_FSalBaseQty ": str(model_data['FRETURNQTY']),
+                "FEntity_Link_FAuxUnitQtyOld": str(model_data['FRETURNQTY']),
+                "FEntity_Link_FAuxUnitQty": str(model_data['FRETURNQTY'])
+            }]
+        }
 
-            return model
-        else:
-            return {}
+        return model
+    else:
+        return {}
 
-    # except Exception as e:
-    #
-    #     return {}
+
+# except Exception as e:
+#
+#     return {}
 
 def writeSRC(startDate, endDate, app3):
     '''
@@ -684,8 +686,8 @@ def writeSRC(startDate, endDate, app3):
 
     pass
 
-def returnSale(startDate,endDate,app2,app3,option):
 
+def returnSale(startDate, endDate, app2, app3, option):
     # app2 = RdClient(token='57DEDF26-5C00-4CA9-BBF7-57ECE07E179B')
     # app3 = RdClient(token='9B6F803F-9D37-41A2-BDA0-70A7179AF0F3')
 
@@ -697,15 +699,15 @@ def returnSale(startDate,endDate,app2,app3,option):
 
         api_sdk = K3CloudApiSdk()
 
-        msg=associated(app2, api_sdk, option, res,app3)
+        msg = associated(app2, api_sdk, option, res, app3)
 
         return msg
     else:
 
-        return {"message":"无订单需要同步"}
+        return {"message": "无订单需要同步"}
 
 
-def returnSale_byOrder(app2,app3,option,data):
+def returnSale_byOrder(app2, app3, option, data):
     '''
     按单据同步
     :param startDate:
@@ -715,20 +717,15 @@ def returnSale_byOrder(app2,app3,option,data):
 
     api_sdk = K3CloudApiSdk()
 
-
-    if data!=[] :
+    if data != []:
 
         res = classification_process(app3, data)
 
-        if res!=[]:
-
-            msg=associated(api_sdk=api_sdk, data=res, option=option, app2=app2, app3=app3)
+        if res != []:
+            msg = associated(api_sdk=api_sdk, data=res, option=option, app2=app2, app3=app3)
 
             return msg
 
     else:
 
-        return {"message":"SRC无此订单"}
-
-
-
+        return {"message": "SRC无此订单"}

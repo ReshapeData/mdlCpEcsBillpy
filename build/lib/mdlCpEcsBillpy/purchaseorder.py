@@ -779,12 +779,12 @@ def insert_procurement_order(app2,app3,odernum,api_sdk,option,df):
 
         if checkDataExist(app3,i) or IsUpdate(app3,data.iloc[0]['FOrderId'],data.iloc[0]['UPDATETIME'],api_sdk,option,data.iloc[0]['FStatus']):
 
-            if judgementData(app2,app3,data):
+            if judgementData(app2,app3,data,option):
 
                 inert_data(app3,data)
 
 
-def insert_procurement_order_byOrder(app2,app3, ordernum,df):
+def insert_procurement_order_byOrder(app2,app3, ordernum,df,option):
     '''
     将数据插入销售订单SRC表中
     :param app2: 操作数据库对象
@@ -798,13 +798,13 @@ def insert_procurement_order_byOrder(app2,app3, ordernum,df):
 
         if checkDataExist(app3, i):
 
-            if judgementData(app2, app3, data):
+            if judgementData(app2, app3, data,option):
                 inert_data(app3, data)
 
 
 
 
-def judgementData(app2, app3, data):
+def judgementData(app2, app3, data,option):
     '''
     判断数据是否合规
     :param app2:
@@ -829,7 +829,7 @@ def judgementData(app2, app3, data):
 
                 l.append(data.loc[i]['FPRDNUMBER'])
 
-                material.performFNumber(l)
+                material.performFNumber(codeList=l,app2=app2,app3=app3,option1=option)
 
                 insertLog(app3, "采购订单", data.loc[i]['FPURORDERNO'], data.loc[i]['FPRDNUMBER']+"物料不存在", "2")
 
@@ -842,7 +842,7 @@ def judgementData(app2, app3, data):
 
         l.append(data.iloc[0]['FSUPPLIERNAME'])
 
-        supplier.FNAME_get_supplier(l)
+        supplier.FNAME_get_supplier(l,app2=app3,app3=app2,option1=option)
 
         insertLog(app3, "采购订单", data.iloc[0]['FPURORDERNO'], data.iloc[0]['FSUPPLIERNAME']+"供应商不存在", "2")
 

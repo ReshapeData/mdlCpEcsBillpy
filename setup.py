@@ -9,7 +9,7 @@ from setuptools import find_packages
 
 setup(
     name  ='mdlCpEcsBillpy',
-    version = '1.1.3',
+    version = '1.1.4',
     install_requires=[
         'requests',
     ],

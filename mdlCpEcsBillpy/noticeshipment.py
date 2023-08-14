@@ -220,7 +220,7 @@ def associated(app2,api_sdk,option,data,app3):
             else:
 
                 insertLog(app3, "发货通知单", str(i[0]['FDELIVERYNO']),
-                          "数据同步成功", "3")
+                          "数据同步成功", "1")
 
                 changeStatus(app3, str(i[0]['FDELIVERYNO']), "3")
 
