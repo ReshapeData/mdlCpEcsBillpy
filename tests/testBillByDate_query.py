@@ -13,7 +13,7 @@ if __name__ == '__main__':
     res=newFunc.saleOrderByDate_query(token="9B6F803F-9D37-41A2-BDA0-70A7179AF0F3",FStartDate="2023-07-05")
 
     print(res)
-    # #
+    #
     res=newFunc.purchaseOrderByDate_query(token="9B6F803F-9D37-41A2-BDA0-70A7179AF0F3",FStartDate="2023-07-06")
 
     print(res)

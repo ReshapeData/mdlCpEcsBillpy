@@ -51,21 +51,27 @@ def saleOrderByNumber_sync(FToken,FNumber,FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_Sales_Order", field="FSALEORDERNO", FNumber=FNumber)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    data = salesorder.salesOrder_byOrder(app2=app2, app3=app3, option=option, data=data)
+        data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_Sales_Order", field="FSALEORDERNO", FNumber=FNumber)
 
-    return data
+        data = salesorder.salesOrder_byOrder(app2=app2, app3=app3, option=option, data=data)
+
+        return True
+
+    else:
+
+        return False
 
 
 
@@ -84,21 +90,27 @@ def purchaseOrderByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_pur_poorder", field="FPURORDERNO", FNumber=FNumber)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    data = purchaseorder.purchaseOrder_byOrder(app2=app2, app3=app3, option=option, data=data)
+        data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_pur_poorder", field="FPURORDERNO", FNumber=FNumber)
 
-    return data
+        data = purchaseorder.purchaseOrder_byOrder(app2=app2, app3=app3, option=option, data=data)
+
+        return True
+
+    else:
+
+        return False
 
 
 def noticeShipmentByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
@@ -116,21 +128,27 @@ def noticeShipmentByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_sal_delivery", field="FDELIVERYNO", FNumber=FNumber)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    data = noticeshipment.noticeShipment_byOrder(app2=app2, app3=app3, option=option, data=data)
+        data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_sal_delivery", field="FDELIVERYNO", FNumber=FNumber)
 
-    return data
+        data = noticeshipment.noticeShipment_byOrder(app2=app2, app3=app3, option=option, data=data)
+
+        return True
+
+    else:
+
+        return False
 
 
 
@@ -149,21 +167,27 @@ def receiptNoticeByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_pur_storageacct", field="FGODOWNNO", FNumber=FNumber)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    data = receiptnotice.receiptNotice_byOrder(app2=app2, app3=app3, option=option, data=data)
+        data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_pur_storageacct", field="FGODOWNNO", FNumber=FNumber)
 
-    return data
+        data = receiptnotice.receiptNotice_byOrder(app2=app2, app3=app3, option=option, data=data)
+
+        return True
+
+    else:
+
+        return False
 
 
 
@@ -182,21 +206,27 @@ def saleOutByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_sal_delivery", field="FDELIVERYNO", FNumber=FNumber)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    data = saledelivery.saleOut_byOrder(app2=app2, app3=app3, option=option, data=data)
+        data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_sal_delivery", field="FDELIVERYNO", FNumber=FNumber)
 
-    return data
+        data = saledelivery.saleOut_byOrder(app2=app2, app3=app3, option=option, data=data)
+
+        return True
+
+    else:
+
+        return False
 
 
 
@@ -215,21 +245,27 @@ def purchaseStorageByNumber_sync(FToken, FNumber, FName="赛普集团新账套")
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_pur_storageacct", field="FGODOWNNO", FNumber=FNumber)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    data = purchasestorage.purchaseStorage_byOrder(app2=app2, app3=app3, option=option, data=data)
+        data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_pur_storageacct", field="FGODOWNNO", FNumber=FNumber)
 
-    return data
+        data = purchasestorage.purchaseStorage_byOrder(app2=app2, app3=app3, option=option, data=data)
+
+        return True
+
+    else:
+
+        return False
 
 
 def otherInStockByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
@@ -247,21 +283,27 @@ def otherInStockByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_pur_storageacct", field="FGODOWNNO", FNumber=FNumber)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    data = otherinstock.otherInStock_byOrder(app2=app2, app3=app3, option=option, data=data)
+        data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_pur_storageacct", field="FGODOWNNO", FNumber=FNumber)
 
-    return data
+        data = otherinstock.otherInStock_byOrder(app2=app2, app3=app3, option=option, data=data)
+
+        return True
+
+    else:
+
+        return False
 
 
 
@@ -280,21 +322,27 @@ def otherOutByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_sal_delivery", field="FDELIVERYNO", FNumber=FNumber)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    data = otherout.otherOut_byOrder(app2=app2, app3=app3, option=option, data=data)
+        data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_sal_delivery", field="FDELIVERYNO", FNumber=FNumber)
 
-    return data
+        data = otherout.otherOut_byOrder(app2=app2, app3=app3, option=option, data=data)
+
+        return True
+
+    else:
+
+        return False
 
 
 def salesBillingByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
@@ -312,21 +360,27 @@ def salesBillingByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_sal_billreceivable", field="FBILLNO", FNumber=FNumber)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    data = salesbilling.salesBilling_byOrder(app2=app2, app3=app3, option=option, data=data)
+        data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_sal_billreceivable", field="FBILLNO", FNumber=FNumber)
 
-    return data
+        data = salesbilling.salesBilling_byOrder(app2=app2, app3=app3, option=option, data=data)
+
+        return True
+
+    else:
+
+        return False
 
 
 def purchasesBillingByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
@@ -344,21 +398,27 @@ def purchasesBillingByNumber_sync(FToken, FNumber, FName="赛普集团新账套"
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_pur_invoice", field="FBILLNO", FNumber=FNumber)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    data = purchasesbilling.purchasesBilling_byOrder(app2=app2, app3=app3, option=option, data=data)
+        data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_pur_invoice", field="FBILLNO", FNumber=FNumber)
 
-    return data
+        data = purchasesbilling.purchasesBilling_byOrder(app2=app2, app3=app3, option=option, data=data)
+
+        return True
+
+    else:
+
+        return False
 
 
 def returnNoticeByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
@@ -376,21 +436,26 @@ def returnNoticeByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_sal_returnstock", field="FMRBBILLNO", FNumber=FNumber)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    data = returnnotice.returnNotice_byOrder(app2=app2, app3=app3, option=option, data=data)
+        data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_sal_returnstock", field="FMRBBILLNO", FNumber=FNumber)
 
-    return data
+        data = returnnotice.returnNotice_byOrder(app2=app2, app3=app3, option=option, data=data)
+
+        return True
+
+    else:
+        return False
 
 
 def returnSaleByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
@@ -408,21 +473,27 @@ def returnSaleByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_sal_returnstock", field="FMRBBILLNO", FNumber=FNumber)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    data = returnsales.returnSale_byOrder(app2=app2, app3=app3, option=option, data=data)
+        data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_sal_returnstock", field="FMRBBILLNO", FNumber=FNumber)
 
-    return data
+        data = returnsales.returnSale_byOrder(app2=app2, app3=app3, option=option, data=data)
+
+        return True
+
+    else:
+
+        return False
 
 
 def returnRequestByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
@@ -440,21 +511,28 @@ def returnRequestByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ods_pur_return", field="FMRBBILLNO", FNumber=FNumber)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    data = returnrequest.returnRequest_byOrder(app2=app2, app3=app3, option=option, data=data)
+        data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ods_pur_return", field="FMRBBILLNO", FNumber=FNumber)
 
-    return data
+        data = returnrequest.returnRequest_byOrder(app2=app2, app3=app3, option=option, data=data)
+
+        return True
+
+
+    else:
+
+        return False
 
 
 def returnPurchaseByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
@@ -472,21 +550,27 @@ def returnPurchaseByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ods_pur_return", field="FMRBBILLNO", FNumber=FNumber)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    data = returnpurchase.returnPurchase_byOrder(app2=app2, app3=app3, option=option, data=data)
+        data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ods_pur_return", field="FMRBBILLNO", FNumber=FNumber)
 
-    return data
+        data = returnpurchase.returnPurchase_byOrder(app2=app2, app3=app3, option=option, data=data)
+
+        return True
+
+    else:
+
+        return False
 
 
 def assemblyDisByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
@@ -504,21 +588,27 @@ def assemblyDisByNumber_sync(FToken, FNumber, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_DISASS_DELIVERY", field="FBillNo", FNumber=FNumber)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    data = disassemble.assemblyDis_byOrder(app2=app2, app3=app3, option=option, data=data)
+        data = getCode_byOrder(app3=app3, tablename="RDS_ECS_ODS_DISASS_DELIVERY", field="FBillNo", FNumber=FNumber)
 
-    return data
+        data = disassemble.assemblyDis_byOrder(app2=app2, app3=app3, option=option, data=data)
+
+        return True
+
+    else:
+
+        return False
 
 
 
@@ -528,7 +618,7 @@ def getDataSource_byOrder(app3, tablename, field, FNumber):
     :param FNumber:
     :return:
     '''
-    sql = f"""select * from {tablename} where {field}='{FNumber}'"""
+    sql = f"""select * as FQTY from {tablename} where {field}='{FNumber}'"""
 
     res = app3.select(sql)
 
@@ -546,9 +636,9 @@ def getDataSource_byDate(app3, tablename, field, FStartDate):
 
     res = app3.select(sql)
 
-    df=pd.DataFrame(res)
+    # df=pd.DataFrame(res)
 
-    return df
+    return res
 
 
 def saleOrderByNumber_query(token, FNumber):
@@ -562,8 +652,33 @@ def saleOrderByNumber_query(token, FNumber):
 
     app3 = RdClient(token=token)
 
-    data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_Sales_Order", field="FSALEORDERNO",
-                                 FNumber=FNumber)
+    # data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_Sales_Order", field="FSALEORDERNO",
+    #                              FNumber=FNumber)
+    #
+    # print(data[0])
+
+    sql=f"""select 
+    FInterID,
+    FSALEORDERNO, 
+    FBILLTYPEIDNAME, 
+    FSALEDATE, FCUSTCODE,
+    FCUSTOMNAME, FSALEORDERENTRYSEQ,
+    FPRDNUMBER, FPRDNAME,
+    CAST(FQTY as float) as FQTY,
+    CAST(FPRICE as float) as FPRICE,
+    CAST(FMONEY as float) as FMONEY,
+    CAST(FTAXRATE as float) as FTAXRATE,
+    CAST(FTAXAMOUNT as float) as FTAXAMOUNT,
+    CAST(FTAXPRICE as float) as FTAXPRICE,
+    CAST(FALLAMOUNTFOR as float) as FALLAMOUNTFOR
+    ,FSALDEPT,FSALGROUP,
+    FSALER,FDESCRIPTION,UPDATETIME,FIsfree,
+    FIsDO,FPurchaseDate,FCollectionTerms,FUrgency, 
+    FSalesType, FUpDateTime, FCurrencyName, FStatus, 
+    FMessage, FOccurrenceTime, FRECCONDITIONID, FSETTLETYPEID
+    from RDS_ECS_src_Sales_Order where FSALEORDERNO='{FNumber}'"""
+
+    data=app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -582,8 +697,43 @@ def purchaseOrderByNumber_query(token, FNumber):
 
     app3 = RdClient(token=token)
 
-    data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_pur_poorder", field="FPURORDERNO",
-                                 FNumber=FNumber)
+    # data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_pur_poorder", field="FPURORDERNO",
+    #                              FNumber=FNumber)
+
+    sql = f"""select
+    FPURORDERNO,
+    FBILLTYPENAME,
+    FPURCHASEDATE,
+    FCUSTOMERNUMBER,
+    FSUPPLIERNAME,
+    FPOORDERSEQ,
+    FPRDNUMBER,
+    FPRDNAME,
+    CAST(FQTY as float) as FQTY,
+    CAST(FPRICE as float) as FPRICE,
+    CAST(FAMOUNT as float) as FAMOUNT,
+    CAST(FTAXRATE as float) as FTAXRATE,
+    CAST(FTAXAMOUNT as float) as FTAXAMOUNT,
+    CAST(FTAXPRICE as float) as FTAXPRICE,
+    CAST(FORAMOUNTFALL as float) as FORAMOUNTFALL,
+    FPURCHASEDEPTID,
+    FPURCHASEGROUPID,
+    FPURCHASERID,
+    FDESCRIPTION,
+    FUploadDate,
+    FIsDo,
+    FDeliveryDate,
+    FIsFree,
+    FUpDateTime,
+    FOrderID,
+    FStatus,
+    FRECCONDITIONID,
+    FMessage,
+    FOccurrenceTime,
+    FSETTLETYPEID
+    from RDS_ECS_src_pur_poorder where FPURORDERNO='{FNumber}'"""
+
+    data=app3.select(sql)
  
     res = pd.DataFrame(data)
 
@@ -601,8 +751,49 @@ def noticeShipmentByNumber_query(token, FNumber):
     '''
     app3 = RdClient(token=token)
 
-    data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_sal_delivery", field="FDELIVERYNO",
-                                 FNumber=FNumber)
+    # data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_sal_delivery", field="FDELIVERYNO",
+    #                              FNumber=FNumber)
+
+    sql = f"""
+    select 
+    FInterID, 
+    FTRADENO, 
+    FDELIVERYNO,
+    FBILLTYPE, 
+    FDELIVERYSTATUS, 
+    FDELIVERDATE,
+    FSTOCK,
+    FCUSTNUMBER,
+    FCUSTOMNAME,
+    FORDERTYPE,
+    FPRDNUMBER,
+    FPRDNAME,
+    CAST(FCOSTPRICE as float) as FCOSTPRICE,
+    CAST(FPRICE as float) as FPRICE,
+    CAST(FNBASEUNITQTY as float) as FNBASEUNITQTY,
+    FLOT,
+    FSUMSUPPLIERLOT,
+    FPRODUCEDATE,
+    FEFFECTIVEDATE,
+    FMEASUREUNIT,
+    CAST(DELIVERYAMOUNT as float) as DELIVERYAMOUNT,
+    CAST(FTAXRATE as float) as FTAXRATE,
+    FSALER,
+    FAUXSALER,
+    FCHECKSTATUS,
+    UPDATETIME,
+    FIsDo,
+    FIsfree,
+    FDATE,
+    FArStatus,
+    FOUTID,
+    FCurrencyName,
+    FMessage,
+    FOccurrenceTime
+    from RDS_ECS_src_sal_delivery where FDELIVERYNO='{FNumber}'
+    """
+
+    data=app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -623,8 +814,44 @@ def receiptNoticeByNumber_query(token, FNumber):
     app3 = RdClient(token=token)
 
     
-    data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_pur_storageacct", field="FGODOWNNO",
-                                 FNumber=FNumber)
+    # data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_pur_storageacct", field="FGODOWNNO",
+    #                              FNumber=FNumber)
+
+    sql = f"""
+    select
+    FGODOWNNO, 
+    FBILLNO, 
+    FPOORDERSEQ, 
+    FBILLTYPEID, 
+    FDOCUMENTSTATUS,
+    FSUPPLIERFIELD, 
+    FCUSTOMERNUMBER, 
+    FSUPPLIERNAME, 
+    FSUPPLIERABBR, 
+    FSTOCKID, 
+    FLIBRARYSIGN, 
+    FBUSINESSDATE, 
+    FBARCODE, 
+    FGOODSID, 
+    FPRDNAME, 
+    CAST(FINSTOCKQTY as float) as FINSTOCKQTY, 
+    CAST(FPURCHASEPRICE as float) as FPURCHASEPRICE, 
+    CAST(FAMOUNT as float) as FAMOUNT, 
+    CAST(FTAXRATE as float) as FTAXRATE, 
+    FLOT, 
+    FCHECKSTATUS, 
+    FDESCRIPTION, 
+    FUPDATETIME, 
+    FInstockId, 
+    FPRODUCEDATE, 
+    FEFFECTIVEDATE, 
+    FMessage, 
+    FOccurrenceTime, 
+    FIsDo
+    from RDS_ECS_src_pur_storageacct where FGODOWNNO='{FNumber}'
+    """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -642,9 +869,49 @@ def saleOutByNumber_query(token, FNumber):
 
     app3 = RdClient(token=token)
 
+    # data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_sal_delivery", field="FDELIVERYNO",
+    #                              FNumber=FNumber)
 
-    data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_sal_delivery", field="FDELIVERYNO",
-                                 FNumber=FNumber)
+    sql = f"""
+        select 
+        FInterID, 
+        FTRADENO, 
+        FDELIVERYNO,
+        FBILLTYPE, 
+        FDELIVERYSTATUS, 
+        FDELIVERDATE,
+        FSTOCK,
+        FCUSTNUMBER,
+        FCUSTOMNAME,
+        FORDERTYPE,
+        FPRDNUMBER,
+        FPRDNAME,
+        CAST(FCOSTPRICE as float) as FCOSTPRICE,
+        CAST(FPRICE as float) as FPRICE,
+        CAST(FNBASEUNITQTY as float) as FNBASEUNITQTY,
+        FLOT,
+        FSUMSUPPLIERLOT,
+        FPRODUCEDATE,
+        FEFFECTIVEDATE,
+        FMEASUREUNIT,
+        CAST(DELIVERYAMOUNT as float) as DELIVERYAMOUNT,
+        CAST(FTAXRATE as float) as FTAXRATE,
+        FSALER,
+        FAUXSALER,
+        FCHECKSTATUS,
+        UPDATETIME,
+        FIsDo,
+        FIsfree,
+        FDATE,
+        FArStatus,
+        FOUTID,
+        FCurrencyName,
+        FMessage,
+        FOccurrenceTime
+        from RDS_ECS_src_sal_delivery where FDELIVERYNO='{FNumber}'
+        """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -664,8 +931,44 @@ def purchaseStorageByNumber_query(token, FNumber):
     app3 = RdClient(token=token)
 
     
-    data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_pur_storageacct", field="FGODOWNNO",
-                                 FNumber=FNumber)
+    # data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_pur_storageacct", field="FGODOWNNO",
+    #                              FNumber=FNumber)
+
+    sql = f"""
+        select
+        FGODOWNNO, 
+        FBILLNO, 
+        FPOORDERSEQ, 
+        FBILLTYPEID, 
+        FDOCUMENTSTATUS,
+        FSUPPLIERFIELD, 
+        FCUSTOMERNUMBER, 
+        FSUPPLIERNAME, 
+        FSUPPLIERABBR, 
+        FSTOCKID, 
+        FLIBRARYSIGN, 
+        FBUSINESSDATE, 
+        FBARCODE, 
+        FGOODSID, 
+        FPRDNAME, 
+        CAST(FINSTOCKQTY as float) as FINSTOCKQTY, 
+        CAST(FPURCHASEPRICE as float) as FPURCHASEPRICE, 
+        CAST(FAMOUNT as float) as FAMOUNT, 
+        CAST(FTAXRATE as float) as FTAXRATE, 
+        FLOT, 
+        FCHECKSTATUS, 
+        FDESCRIPTION, 
+        FUPDATETIME, 
+        FInstockId, 
+        FPRODUCEDATE, 
+        FEFFECTIVEDATE, 
+        FMessage, 
+        FOccurrenceTime, 
+        FIsDo
+        from RDS_ECS_src_pur_storageacct where FGODOWNNO='{FNumber}'
+        """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -684,8 +987,44 @@ def otherInStockByNumber_query(token, FNumber):
 
     app3 = RdClient(token=token)
     
-    data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_pur_storageacct", field="FGODOWNNO",
-                                 FNumber=FNumber)
+    # data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_pur_storageacct", field="FGODOWNNO",
+    #                              FNumber=FNumber)
+
+    sql = f"""
+            select
+            FGODOWNNO, 
+            FBILLNO, 
+            FPOORDERSEQ, 
+            FBILLTYPEID, 
+            FDOCUMENTSTATUS,
+            FSUPPLIERFIELD, 
+            FCUSTOMERNUMBER, 
+            FSUPPLIERNAME, 
+            FSUPPLIERABBR, 
+            FSTOCKID, 
+            FLIBRARYSIGN, 
+            FBUSINESSDATE, 
+            FBARCODE, 
+            FGOODSID, 
+            FPRDNAME, 
+            CAST(FINSTOCKQTY as float) as FINSTOCKQTY, 
+            CAST(FPURCHASEPRICE as float) as FPURCHASEPRICE, 
+            CAST(FAMOUNT as float) as FAMOUNT, 
+            CAST(FTAXRATE as float) as FTAXRATE, 
+            FLOT, 
+            FCHECKSTATUS, 
+            FDESCRIPTION, 
+            FUPDATETIME, 
+            FInstockId, 
+            FPRODUCEDATE, 
+            FEFFECTIVEDATE, 
+            FMessage, 
+            FOccurrenceTime, 
+            FIsDo
+            from RDS_ECS_src_pur_storageacct where FGODOWNNO='{FNumber}'
+            """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -706,8 +1045,49 @@ def otherOutByNumber_query(token, FNumber):
     app3 = RdClient(token=token)
 
     
-    data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_sal_delivery", field="FDELIVERYNO",
-                                     FNumber=FNumber)
+    # data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_sal_delivery", field="FDELIVERYNO",
+    #                                  FNumber=FNumber)
+
+    sql = f"""
+            select 
+            FInterID, 
+            FTRADENO, 
+            FDELIVERYNO,
+            FBILLTYPE, 
+            FDELIVERYSTATUS, 
+            FDELIVERDATE,
+            FSTOCK,
+            FCUSTNUMBER,
+            FCUSTOMNAME,
+            FORDERTYPE,
+            FPRDNUMBER,
+            FPRDNAME,
+            CAST(FCOSTPRICE as float) as FCOSTPRICE,
+            CAST(FPRICE as float) as FPRICE,
+            CAST(FNBASEUNITQTY as float) as FNBASEUNITQTY,
+            FLOT,
+            FSUMSUPPLIERLOT,
+            FPRODUCEDATE,
+            FEFFECTIVEDATE,
+            FMEASUREUNIT,
+            CAST(DELIVERYAMOUNT as float) as DELIVERYAMOUNT,
+            CAST(FTAXRATE as float) as FTAXRATE,
+            FSALER,
+            FAUXSALER,
+            FCHECKSTATUS,
+            UPDATETIME,
+            FIsDo,
+            FIsfree,
+            FDATE,
+            FArStatus,
+            FOUTID,
+            FCurrencyName,
+            FMessage,
+            FOccurrenceTime
+            from RDS_ECS_src_sal_delivery where FDELIVERYNO='{FNumber}'
+            """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -727,8 +1107,42 @@ def salesBillingByNumber_query(token, FNumber):
     app3 = RdClient(token=token)
 
     
-    data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_sal_billreceivable", field="FBillNo",
-                                 FNumber=FNumber)
+    # data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_sal_billreceivable", field="FBillNo",
+    #                              FNumber=FNumber)
+
+    sql = f"""
+    select
+    FInterID, 
+    FCUSTNUMBER, 
+    FOUTSTOCKBILLNO, 
+    FSALEORDERENTRYSEQ, 
+    FBILLTYPEID, 
+    FCUSTOMNAME, 
+    FBANKBILLNO, 
+    FBILLNO, 
+    FPrdNumber, 
+    FPrdName, 
+    FQUANTITY, 
+    CAST(FUNITPRICE as float) as FUNITPRICE, 
+    CAST(FSUMVALUE as float) as FSUMVALUE, 
+    CAST(FTAXRATE as float) as FTAXRATE, 
+    FTRADENO, 
+    FNOTETYPE, 
+    FISPACKINGBILLNO, 
+    FBILLCODE, 
+    FINVOICENO, 
+    FINVOICEDATE, 
+    UPDATETIME, 
+    FIsDo, 
+    FCurrencyName, 
+    FInvoiceid, 
+    FLot, 
+    FMessage, 
+    FOccurrenceTime
+    from RDS_ECS_src_sal_billreceivable where FBillNo='{FNumber}'
+    """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -749,7 +1163,44 @@ def purchasesBillingByNumber_query(token, FNumber):
     app3 = RdClient(token=token)
 
     
-    data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_pur_invoice", field="FBILLNO", FNumber=FNumber)
+    # data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_pur_invoice", field="FBILLNO", FNumber=FNumber)
+
+    sql = f"""
+    select
+    FPURORDERNO, 
+    FGODOWNNO, 
+    FBILLTYPEINAME, 
+    FINVOICEDATE, 
+    FINVOICETYPE, 
+    FINVOICENO, 
+    FDATE, 
+    FCUSTOMERNUMBER, 
+    FSUPPLIERNAME, 
+    FPOORDERSEQ, 
+    FPRDNUMBER, 
+    FPRDNAME, 
+    CAST(FQTY as float) as FQTY, 
+    CAST(FUNITPRICE as float) as FUNITPRICE, 
+    CAST(FSUMVALUE as float) as FSUMVALUE, 
+    CAST(FTAXRATE as float) as FTAXRATE, 
+    CAST(FTAXAMOUNT as float) as FTAXAMOUNT, 
+    CAST(FTAXPRICE as float) as FTAXPRICE, 
+    CAST(FAMOUNTALL as float) as FAMOUNTALL, 
+    FPURCHASEDEPTNAME, 
+    FPURCHASEGROUPNAME, 
+    FPURCHASERINAME, 
+    FDESCRIPTION, 
+    FUPLOADDATE, 
+    FISDO, 
+    FInvoiceid, 
+    FLot, 
+    FMessage, 
+    FOccurrenceTime, 
+    FBILLNO
+    from RDS_ECS_src_pur_invoice where FBILLNO='{FNumber}'
+    """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -767,8 +1218,52 @@ def returnNoticeByNumber_query(token, FNumber):
 
     app3 = RdClient(token=token)
     
-    data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_sal_returnstock", field="FMRBBILLNO",
-                                 FNumber=FNumber)
+    # data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_sal_returnstock", field="FMRBBILLNO",
+    #                              FNumber=FNumber)
+
+    sql = f"""
+    select
+    FMRBBILLNO, 
+    FTRADENO, 
+    FSALEORDERENTRYSEQ, 
+    FBILLTYPE, 
+    FRETSALESTATE, 
+    FPRDRETURNSTATUS, 
+    FSTOCK, 
+    FCUSTNUMBER, 
+    FCUSTOMNAME, 
+    FCUSTCODE, 
+    FPrdNumber, 
+    FPrdName, 
+    CAST(FRETSALEPRICE as float) as FRETSALEPRICE, 
+    CAST(FRETURNQTY as float) as FRETURNQTY, 
+    FREQUESTTIME, 
+    FBUSINESSDATE, 
+    OPTRPTENTRYDATE, 
+    CAST(FCOSTPRICE as float) as FCOSTPRICE, 
+    FMEASUREUNIT, 
+    CAST(FRETAMOUNT as float) as FRETAMOUNT, 
+    CAST(FTAXRATE as float) as FTAXRATE, 
+    FLOT, 
+    FSALER, 
+    FAUXSALER, 
+    FSUMSUPPLIERLOT, 
+    FPRODUCEDATE, 
+    FEFFECTIVEDATE, 
+    CAST(FCHECKSTATUS as nvarchar) as FCHECKSTATUS, 
+    UPDATETIME, 
+    FDELIVERYNO, 
+    FIsDo, 
+    FIsFree, 
+    FReturnTime, 
+    FADDID, 
+    FCurrencyName, 
+    FMessage, 
+    FOccurrenceTime
+    from RDS_ECS_src_sal_returnstock where FMRBBILLNO='{FNumber}'
+    """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -787,8 +1282,52 @@ def returnSaleByNumber_query(token, FNumber):
 
     app3 = RdClient(token=token)
  
-    data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_sal_returnstock", field="FMRBBILLNO",
-                                 FNumber=FNumber)
+    # data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_sal_returnstock", field="FMRBBILLNO",
+    #                              FNumber=FNumber)
+
+    sql = f"""
+        select
+        FMRBBILLNO, 
+        FTRADENO, 
+        FSALEORDERENTRYSEQ, 
+        FBILLTYPE, 
+        FRETSALESTATE, 
+        FPRDRETURNSTATUS, 
+        FSTOCK, 
+        FCUSTNUMBER, 
+        FCUSTOMNAME, 
+        FCUSTCODE, 
+        FPrdNumber, 
+        FPrdName, 
+        CAST(FRETSALEPRICE as float) as FRETSALEPRICE, 
+        CAST(FRETURNQTY as float) as FRETURNQTY, 
+        FREQUESTTIME, 
+        FBUSINESSDATE, 
+        OPTRPTENTRYDATE, 
+        CAST(FCOSTPRICE as float) as FCOSTPRICE, 
+        FMEASUREUNIT, 
+        CAST(FRETAMOUNT as float) as FRETAMOUNT, 
+        CAST(FTAXRATE as float) as FTAXRATE, 
+        FLOT, 
+        FSALER, 
+        FAUXSALER, 
+        FSUMSUPPLIERLOT, 
+        FPRODUCEDATE, 
+        FEFFECTIVEDATE, 
+        CAST(FCHECKSTATUS as nvarchar) as FCHECKSTATUS, 
+        UPDATETIME, 
+        FDELIVERYNO, 
+        FIsDo, 
+        FIsFree, 
+        FReturnTime, 
+        FADDID, 
+        FCurrencyName, 
+        FMessage, 
+        FOccurrenceTime
+        from RDS_ECS_src_sal_returnstock where FMRBBILLNO='{FNumber}'
+        """
+
+    data = app3.select(sql)
       
     res = pd.DataFrame(data)
 
@@ -807,7 +1346,43 @@ def returnRequestByNumber_query(token, FNumber):
 
     app3 = RdClient(token=token)
 
-    data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_pur_return", field="FMRBBILLNO", FNumber=FNumber)
+    # data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_pur_return", field="FMRBBILLNO", FNumber=FNumber)
+
+    sql = f"""
+    select
+    FMRBBILLNO, 
+    FPURORDERNO, 
+    FPOORDERSEQ, 
+    FBILLTYPEID, 
+    FCUSTOMERNUMBER, 
+    FSUPPLIERFIELD, 
+    FSUPPLIERNAME, 
+    FSUPPLIERABBR, 
+    FSTOCKID, 
+    FGOODSTYPEID, 
+    FBARCODE, 
+    FGOODSID, 
+    FPRDNAME, 
+    CAST(FRETSALEPRICE as float) as FRETSALEPRICE, 
+    CAST(FTAXRATE as float) as FTAXRATE, 
+    FLOT, 
+    CAST(FRETQTY as float) as FRETQTY, 
+    CAST(FRETAMOUNT as float) as FRETAMOUNT, 
+    FDETAILREMARK, 
+    FCHECKSTATUS, 
+    FUploadDate, 
+    FIsDo, 
+    FINISHTIME, 
+    EFFECTDATE, 
+    MANUFACTUREDATE, 
+    FDATE, 
+    FReturnId, 
+    FMessage, 
+    FOccurrenceTime
+    from RDS_ECS_src_pur_return where FMRBBILLNO='{FNumber}'
+    """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -826,7 +1401,43 @@ def returnPurchaseByNumber_query(token, FNumber):
 
     app3 = RdClient(token=token)
  
-    data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_pur_return", field="FMRBBILLNO", FNumber=FNumber)
+    # data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_pur_return", field="FMRBBILLNO", FNumber=FNumber)
+
+    sql = f"""
+        select
+        FMRBBILLNO, 
+        FPURORDERNO, 
+        FPOORDERSEQ, 
+        FBILLTYPEID, 
+        FCUSTOMERNUMBER, 
+        FSUPPLIERFIELD, 
+        FSUPPLIERNAME, 
+        FSUPPLIERABBR, 
+        FSTOCKID, 
+        FGOODSTYPEID, 
+        FBARCODE, 
+        FGOODSID, 
+        FPRDNAME, 
+        CAST(FRETSALEPRICE as float) as FRETSALEPRICE, 
+        CAST(FTAXRATE as float) as FTAXRATE, 
+        FLOT, 
+        CAST(FRETQTY as float) as FRETQTY, 
+        CAST(FRETAMOUNT as float) as FRETAMOUNT, 
+        FDETAILREMARK, 
+        FCHECKSTATUS, 
+        FUploadDate, 
+        FIsDo, 
+        FINISHTIME, 
+        EFFECTDATE, 
+        MANUFACTUREDATE, 
+        FDATE, 
+        FReturnId, 
+        FMessage, 
+        FOccurrenceTime
+        from RDS_ECS_src_pur_return where FMRBBILLNO='{FNumber}'
+        """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -845,8 +1456,36 @@ def assemblyDisByNumber_query(token, FNumber):
 
     app3 = RdClient(token=token)
   
-    data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_DISASS_DELIVERY", field="FBillNo",
-                                 FNumber=FNumber)
+    # data = getDataSource_byOrder(app3=app3, tablename="RDS_ECS_src_DISASS_DELIVERY", field="FBillNo",
+    #                              FNumber=FNumber)
+
+    sql = """
+    select 
+    FBillNo, 
+    Fseq, 
+    Fdate, 
+    FDeptName, 
+    FItemNumber, 
+    FItemName, 
+    FItemModel, 
+    FUnitName, 
+    CAST(Fqty as float) as Fqty, 
+    FStockName, 
+    Flot, 
+    Fnote, 
+    FInterID, 
+    FEFFECTIVEDATE, 
+    FPRODUCEDATE, 
+    FSUMSUPPLIERLOT, 
+    FAFFAIRTYPE, 
+    FMessage, 
+    FOccurrenceTime, 
+    FIsDo
+    from RDS_ECS_src_DISASS_DELIVERY where FBillNo='MC202307030001'
+    """
+
+    data = app3.select(sql)
+
     res = pd.DataFrame(data)
 
     return res
@@ -863,8 +1502,33 @@ def saleOrderByDate_query(token, FStartDate):
 
     app3 = RdClient(token=token)
 
-    data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_Sales_Order", field="FSALEDATE",
-                                 FStartDate=FStartDate)
+    # data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_Sales_Order", field="FSALEDATE",
+    #                              FStartDate=FStartDate)
+
+    sql = f"""select 
+    FInterID,
+    FSALEORDERNO,
+    FBILLTYPEIDNAME,
+    FSALEDATE, FCUSTCODE,
+    FCUSTOMNAME, FSALEORDERENTRYSEQ,
+    FPRDNUMBER, FPRDNAME,
+    CAST(FQTY as float) as FQTY,
+    CAST(FPRICE as float) as FPRICE,
+    CAST(FMONEY as float) as FMONEY,
+    CAST(FTAXRATE as float) as FTAXRATE,
+    CAST(FTAXAMOUNT as float) as FTAXAMOUNT,
+    CAST(FTAXPRICE as float) as FTAXPRICE,
+    CAST(FALLAMOUNTFOR as float) as FALLAMOUNTFOR
+    ,FSALDEPT,FSALGROUP,
+    FSALER,FDESCRIPTION,UPDATETIME,FIsfree,
+    FIsDO,FPurchaseDate,FCollectionTerms,FUrgency,
+    FSalesType, FUpDateTime, FCurrencyName, FStatus,
+    FMessage, FOccurrenceTime, FRECCONDITIONID, FSETTLETYPEID
+    from RDS_ECS_src_Sales_Order 
+    where CONVERT(date,FSALEDATE,20) = '{FStartDate}'"""
+
+    data = app3.select(sql)
+
     res = pd.DataFrame(data)
 
     return res
@@ -881,8 +1545,43 @@ def purchaseOrderByDate_query(token, FStartDate):
 
     app3 = RdClient(token=token)
 
-    data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_pur_poorder", field="FPURCHASEDATE",
-                                 FStartDate=FStartDate)
+    # data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_pur_poorder", field="FPURCHASEDATE",
+    #                              FStartDate=FStartDate)
+
+    sql = f"""select
+    FPURORDERNO,
+    FBILLTYPENAME,
+    FPURCHASEDATE,
+    FCUSTOMERNUMBER,
+    FSUPPLIERNAME,
+    FPOORDERSEQ,
+    FPRDNUMBER,
+    FPRDNAME,
+    CAST(FQTY as float) as FQTY,
+    CAST(FPRICE as float) as FPRICE,
+    CAST(FAMOUNT as float) as FAMOUNT,
+    CAST(FTAXRATE as float) as FTAXRATE,
+    CAST(FTAXAMOUNT as float) as FTAXAMOUNT,
+    CAST(FTAXPRICE as float) as FTAXPRICE,
+    CAST(FORAMOUNTFALL as float) as FORAMOUNTFALL,
+    FPURCHASEDEPTID,
+    FPURCHASEGROUPID,
+    FPURCHASERID,
+    FDESCRIPTION,
+    FUploadDate,
+    FIsDo,
+    FDeliveryDate,
+    FIsFree,
+    FUpDateTime,
+    FOrderID,
+    FStatus,
+    FRECCONDITIONID,
+    FMessage,
+    FOccurrenceTime,
+    FSETTLETYPEID
+    from RDS_ECS_src_pur_poorder where CONVERT(date,FPURCHASEDATE,20) = '{FStartDate}'"""
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -899,8 +1598,49 @@ def noticeShipmentByDate_query(token, FStartDate):
     '''
     app3 = RdClient(token=token)
 
-    data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_sal_delivery", field="FDELIVERDATE",
-                                 FStartDate=FStartDate)
+    # data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_sal_delivery", field="FDELIVERDATE",
+    #                              FStartDate=FStartDate)
+
+    sql = f"""
+    select 
+    FInterID, 
+    FTRADENO, 
+    FDELIVERYNO,
+    FBILLTYPE, 
+    FDELIVERYSTATUS, 
+    FDELIVERDATE,
+    FSTOCK,
+    FCUSTNUMBER,
+    FCUSTOMNAME,
+    FORDERTYPE,
+    FPRDNUMBER,
+    FPRDNAME,
+    CAST(FCOSTPRICE as float) as FCOSTPRICE,
+    CAST(FPRICE as float) as FPRICE,
+    CAST(FNBASEUNITQTY as float) as FNBASEUNITQTY,
+    FLOT,
+    FSUMSUPPLIERLOT,
+    FPRODUCEDATE,
+    FEFFECTIVEDATE,
+    FMEASUREUNIT,
+    CAST(DELIVERYAMOUNT as float) as DELIVERYAMOUNT,
+    CAST(FTAXRATE as float) as FTAXRATE,
+    FSALER,
+    FAUXSALER,
+    FCHECKSTATUS,
+    UPDATETIME,
+    FIsDo,
+    FIsfree,
+    FDATE,
+    FArStatus,
+    FOUTID,
+    FCurrencyName,
+    FMessage,
+    FOccurrenceTime
+    from RDS_ECS_src_sal_delivery where CONVERT(date,FDELIVERDATE,20) = '{FStartDate}'
+    """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -918,8 +1658,44 @@ def receiptNoticeByDate_query(token, FStartDate):
 
     app3 = RdClient(token=token)
 
-    data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_pur_storageacct", field="FBUSINESSDATE",
-                                 FStartDate=FStartDate)
+    # data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_pur_storageacct", field="FBUSINESSDATE",
+    #                              FStartDate=FStartDate)
+
+    sql = f"""
+    select
+    FGODOWNNO, 
+    FBILLNO, 
+    FPOORDERSEQ, 
+    FBILLTYPEID, 
+    FDOCUMENTSTATUS,
+    FSUPPLIERFIELD, 
+    FCUSTOMERNUMBER, 
+    FSUPPLIERNAME, 
+    FSUPPLIERABBR, 
+    FSTOCKID, 
+    FLIBRARYSIGN, 
+    FBUSINESSDATE, 
+    FBARCODE, 
+    FGOODSID, 
+    FPRDNAME, 
+    CAST(FINSTOCKQTY as float) as FINSTOCKQTY, 
+    CAST(FPURCHASEPRICE as float) as FPURCHASEPRICE, 
+    CAST(FAMOUNT as float) as FAMOUNT, 
+    CAST(FTAXRATE as float) as FTAXRATE, 
+    FLOT, 
+    FCHECKSTATUS, 
+    FDESCRIPTION, 
+    FUPDATETIME, 
+    FInstockId, 
+    FPRODUCEDATE, 
+    FEFFECTIVEDATE, 
+    FMessage, 
+    FOccurrenceTime, 
+    FIsDo
+    from RDS_ECS_src_pur_storageacct where CONVERT(date,FBUSINESSDATE,20) = '{FStartDate}'
+    """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -937,8 +1713,49 @@ def saleOutByDate_query(token, FStartDate):
 
     app3 = RdClient(token=token)
 
-    data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_sal_delivery", field="FDELIVERDATE",
-                                 FStartDate=FStartDate)
+    # data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_sal_delivery", field="FDELIVERDATE",
+    #                              FStartDate=FStartDate)
+
+    sql = f"""
+        select 
+        FInterID, 
+        FTRADENO, 
+        FDELIVERYNO,
+        FBILLTYPE, 
+        FDELIVERYSTATUS, 
+        FDELIVERDATE,
+        FSTOCK,
+        FCUSTNUMBER,
+        FCUSTOMNAME,
+        FORDERTYPE,
+        FPRDNUMBER,
+        FPRDNAME,
+        CAST(FCOSTPRICE as float) as FCOSTPRICE,
+        CAST(FPRICE as float) as FPRICE,
+        CAST(FNBASEUNITQTY as float) as FNBASEUNITQTY,
+        FLOT,
+        FSUMSUPPLIERLOT,
+        FPRODUCEDATE,
+        FEFFECTIVEDATE,
+        FMEASUREUNIT,
+        CAST(DELIVERYAMOUNT as float) as DELIVERYAMOUNT,
+        CAST(FTAXRATE as float) as FTAXRATE,
+        FSALER,
+        FAUXSALER,
+        FCHECKSTATUS,
+        UPDATETIME,
+        FIsDo,
+        FIsfree,
+        FDATE,
+        FArStatus,
+        FOUTID,
+        FCurrencyName,
+        FMessage,
+        FOccurrenceTime
+        from RDS_ECS_src_sal_delivery where CONVERT(date,FDELIVERDATE,20) = '{FStartDate}'
+        """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -956,8 +1773,44 @@ def purchaseStorageByDate_query(token, FStartDate):
 
     app3 = RdClient(token=token)
 
-    data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_pur_storageacct", field="FBUSINESSDATE",
-                                 FStartDate=FStartDate)
+    # data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_pur_storageacct", field="FBUSINESSDATE",
+    #                              FStartDate=FStartDate)
+
+    sql = f"""
+        select
+        FGODOWNNO, 
+        FBILLNO, 
+        FPOORDERSEQ, 
+        FBILLTYPEID, 
+        FDOCUMENTSTATUS,
+        FSUPPLIERFIELD, 
+        FCUSTOMERNUMBER, 
+        FSUPPLIERNAME, 
+        FSUPPLIERABBR, 
+        FSTOCKID, 
+        FLIBRARYSIGN, 
+        FBUSINESSDATE, 
+        FBARCODE, 
+        FGOODSID, 
+        FPRDNAME, 
+        CAST(FINSTOCKQTY as float) as FINSTOCKQTY, 
+        CAST(FPURCHASEPRICE as float) as FPURCHASEPRICE, 
+        CAST(FAMOUNT as float) as FAMOUNT, 
+        CAST(FTAXRATE as float) as FTAXRATE, 
+        FLOT, 
+        FCHECKSTATUS, 
+        FDESCRIPTION, 
+        FUPDATETIME, 
+        FInstockId, 
+        FPRODUCEDATE, 
+        FEFFECTIVEDATE, 
+        FMessage, 
+        FOccurrenceTime, 
+        FIsDo
+        from RDS_ECS_src_pur_storageacct where CONVERT(date,FBUSINESSDATE,20) = '{FStartDate}'
+        """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -975,8 +1828,44 @@ def otherInStockByDate_query(token, FStartDate):
 
     app3 = RdClient(token=token)
 
-    data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_pur_storageacct", field="FBUSINESSDATE",
-                                 FStartDate=FStartDate)
+    # data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_pur_storageacct", field="FBUSINESSDATE",
+    #                              FStartDate=FStartDate)
+
+    sql = f"""
+            select
+            FGODOWNNO, 
+            FBILLNO, 
+            FPOORDERSEQ, 
+            FBILLTYPEID, 
+            FDOCUMENTSTATUS,
+            FSUPPLIERFIELD, 
+            FCUSTOMERNUMBER, 
+            FSUPPLIERNAME, 
+            FSUPPLIERABBR, 
+            FSTOCKID, 
+            FLIBRARYSIGN, 
+            FBUSINESSDATE, 
+            FBARCODE, 
+            FGOODSID, 
+            FPRDNAME, 
+            CAST(FINSTOCKQTY as float) as FINSTOCKQTY, 
+            CAST(FPURCHASEPRICE as float) as FPURCHASEPRICE, 
+            CAST(FAMOUNT as float) as FAMOUNT, 
+            CAST(FTAXRATE as float) as FTAXRATE, 
+            FLOT, 
+            FCHECKSTATUS, 
+            FDESCRIPTION, 
+            FUPDATETIME, 
+            FInstockId, 
+            FPRODUCEDATE, 
+            FEFFECTIVEDATE, 
+            FMessage, 
+            FOccurrenceTime, 
+            FIsDo
+            from RDS_ECS_src_pur_storageacct where CONVERT(date,FBUSINESSDATE,20) = '{FStartDate}'
+            """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -994,8 +1883,49 @@ def otherOutByDate_query(token, FStartDate):
 
     app3 = RdClient(token=token)
 
-    data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_sal_delivery", field="FDELIVERDATE",
-                                 FStartDate=FStartDate)
+    # data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_sal_delivery", field="FDELIVERDATE",
+    #                              FStartDate=FStartDate)
+
+    sql = f"""
+            select 
+            FInterID, 
+            FTRADENO, 
+            FDELIVERYNO,
+            FBILLTYPE, 
+            FDELIVERYSTATUS, 
+            FDELIVERDATE,
+            FSTOCK,
+            FCUSTNUMBER,
+            FCUSTOMNAME,
+            FORDERTYPE,
+            FPRDNUMBER,
+            FPRDNAME,
+            CAST(FCOSTPRICE as float) as FCOSTPRICE,
+            CAST(FPRICE as float) as FPRICE,
+            CAST(FNBASEUNITQTY as float) as FNBASEUNITQTY,
+            FLOT,
+            FSUMSUPPLIERLOT,
+            FPRODUCEDATE,
+            FEFFECTIVEDATE,
+            FMEASUREUNIT,
+            CAST(DELIVERYAMOUNT as float) as DELIVERYAMOUNT,
+            CAST(FTAXRATE as float) as FTAXRATE,
+            FSALER,
+            FAUXSALER,
+            FCHECKSTATUS,
+            UPDATETIME,
+            FIsDo,
+            FIsfree,
+            FDATE,
+            FArStatus,
+            FOUTID,
+            FCurrencyName,
+            FMessage,
+            FOccurrenceTime
+            from RDS_ECS_src_sal_delivery where CONVERT(date,FDELIVERDATE,20) = '{FStartDate}'
+            """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -1013,8 +1943,42 @@ def salesBillingByDate_query(token, FStartDate):
 
     app3 = RdClient(token=token)
 
-    data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_sal_billreceivable", field="FINVOICEDATE",
-                                 FStartDate=FStartDate)
+    # data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_sal_billreceivable", field="FINVOICEDATE",
+    #                              FStartDate=FStartDate)
+
+    sql = f"""
+    select
+    FInterID, 
+    FCUSTNUMBER, 
+    FOUTSTOCKBILLNO, 
+    FSALEORDERENTRYSEQ, 
+    FBILLTYPEID, 
+    FCUSTOMNAME, 
+    FBANKBILLNO, 
+    FBILLNO, 
+    FPrdNumber, 
+    FPrdName, 
+    FQUANTITY, 
+    CAST(FUNITPRICE as float) as FUNITPRICE, 
+    CAST(FSUMVALUE as float) as FSUMVALUE, 
+    CAST(FTAXRATE as float) as FTAXRATE, 
+    FTRADENO, 
+    FNOTETYPE, 
+    FISPACKINGBILLNO, 
+    FBILLCODE, 
+    FINVOICENO, 
+    FINVOICEDATE, 
+    UPDATETIME, 
+    FIsDo, 
+    FCurrencyName, 
+    FInvoiceid, 
+    FLot, 
+    FMessage, 
+    FOccurrenceTime
+    from RDS_ECS_src_sal_billreceivable where CONVERT(date,FINVOICEDATE,20) = '{FStartDate}'
+    """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -1032,7 +1996,44 @@ def purchasesBillingByDate_query(token, FStartDate):
 
     app3 = RdClient(token=token)
 
-    data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_pur_invoice", field="FDate", FStartDate=FStartDate)
+    # data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_pur_invoice", field="FDate", FStartDate=FStartDate)
+
+    sql = f"""
+    select
+    FPURORDERNO, 
+    FGODOWNNO, 
+    FBILLTYPEINAME, 
+    FINVOICEDATE, 
+    FINVOICETYPE, 
+    FINVOICENO, 
+    FDATE, 
+    FCUSTOMERNUMBER, 
+    FSUPPLIERNAME, 
+    FPOORDERSEQ, 
+    FPRDNUMBER, 
+    FPRDNAME, 
+    CAST(FQTY as float) as FQTY, 
+    CAST(FUNITPRICE as float) as FUNITPRICE, 
+    CAST(FSUMVALUE as float) as FSUMVALUE, 
+    CAST(FTAXRATE as float) as FTAXRATE, 
+    CAST(FTAXAMOUNT as float) as FTAXAMOUNT, 
+    CAST(FTAXPRICE as float) as FTAXPRICE, 
+    CAST(FAMOUNTALL as float) as FAMOUNTALL, 
+    FPURCHASEDEPTNAME, 
+    FPURCHASEGROUPNAME, 
+    FPURCHASERINAME, 
+    FDESCRIPTION, 
+    FUPLOADDATE, 
+    FISDO, 
+    FInvoiceid, 
+    FLot, 
+    FMessage, 
+    FOccurrenceTime, 
+    FBILLNO
+    from RDS_ECS_src_pur_invoice where CONVERT(date,FDate,20) = '{FStartDate}'
+    """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -1050,8 +2051,52 @@ def returnNoticeByDate_query(token, FStartDate):
 
     app3 = RdClient(token=token)
 
-    data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_sal_returnstock", field="OPTRPTENTRYDATE",
-                                 FStartDate=FStartDate)
+    # data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_sal_returnstock", field="OPTRPTENTRYDATE",
+    #                              FStartDate=FStartDate)
+
+    sql = f"""
+    select
+    FMRBBILLNO, 
+    FTRADENO, 
+    FSALEORDERENTRYSEQ, 
+    FBILLTYPE, 
+    FRETSALESTATE, 
+    FPRDRETURNSTATUS, 
+    FSTOCK, 
+    FCUSTNUMBER, 
+    FCUSTOMNAME, 
+    FCUSTCODE, 
+    FPrdNumber, 
+    FPrdName, 
+    CAST(FRETSALEPRICE as float) as FRETSALEPRICE, 
+    CAST(FRETURNQTY as float) as FRETURNQTY, 
+    FREQUESTTIME, 
+    FBUSINESSDATE, 
+    OPTRPTENTRYDATE, 
+    CAST(FCOSTPRICE as float) as FCOSTPRICE, 
+    FMEASUREUNIT, 
+    CAST(FRETAMOUNT as float) as FRETAMOUNT, 
+    CAST(FTAXRATE as float) as FTAXRATE, 
+    FLOT, 
+    FSALER, 
+    FAUXSALER, 
+    FSUMSUPPLIERLOT, 
+    FPRODUCEDATE, 
+    FEFFECTIVEDATE, 
+    CAST(FCHECKSTATUS as nvarchar) as FCHECKSTATUS, 
+    UPDATETIME, 
+    FDELIVERYNO, 
+    FIsDo, 
+    FIsFree, 
+    FReturnTime, 
+    FADDID, 
+    FCurrencyName, 
+    FMessage, 
+    FOccurrenceTime
+    from RDS_ECS_src_sal_returnstock where CONVERT(date,OPTRPTENTRYDATE,20) = '{FStartDate}'
+    """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -1069,8 +2114,52 @@ def returnSaleByDate_query(token, FStartDate):
 
     app3 = RdClient(token=token)
 
-    data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_sal_returnstock", field="OPTRPTENTRYDATE",
-                                 FStartDate=FStartDate)
+    # data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_sal_returnstock", field="OPTRPTENTRYDATE",
+    #                              FStartDate=FStartDate)
+
+    sql = f"""
+        select
+        FMRBBILLNO, 
+        FTRADENO, 
+        FSALEORDERENTRYSEQ, 
+        FBILLTYPE, 
+        FRETSALESTATE, 
+        FPRDRETURNSTATUS, 
+        FSTOCK, 
+        FCUSTNUMBER, 
+        FCUSTOMNAME, 
+        FCUSTCODE, 
+        FPrdNumber, 
+        FPrdName, 
+        CAST(FRETSALEPRICE as float) as FRETSALEPRICE, 
+        CAST(FRETURNQTY as float) as FRETURNQTY, 
+        FREQUESTTIME, 
+        FBUSINESSDATE, 
+        OPTRPTENTRYDATE, 
+        CAST(FCOSTPRICE as float) as FCOSTPRICE, 
+        FMEASUREUNIT, 
+        CAST(FRETAMOUNT as float) as FRETAMOUNT, 
+        CAST(FTAXRATE as float) as FTAXRATE, 
+        FLOT, 
+        FSALER, 
+        FAUXSALER, 
+        FSUMSUPPLIERLOT, 
+        FPRODUCEDATE, 
+        FEFFECTIVEDATE, 
+        CAST(FCHECKSTATUS as nvarchar) as FCHECKSTATUS, 
+        UPDATETIME, 
+        FDELIVERYNO, 
+        FIsDo, 
+        FIsFree, 
+        FReturnTime, 
+        FADDID, 
+        FCurrencyName, 
+        FMessage, 
+        FOccurrenceTime
+        from RDS_ECS_src_sal_returnstock where CONVERT(date,OPTRPTENTRYDATE,20) = '{FStartDate}'
+        """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -1088,7 +2177,43 @@ def returnRequestByDate_query(token, FStartDate):
 
     app3 = RdClient(token=token)
 
-    data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_pur_return", field="FDATE", FStartDate=FStartDate)
+    # data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_pur_return", field="FDATE", FStartDate=FStartDate)
+
+    sql = f"""
+    select
+    FMRBBILLNO, 
+    FPURORDERNO, 
+    FPOORDERSEQ, 
+    FBILLTYPEID, 
+    FCUSTOMERNUMBER, 
+    FSUPPLIERFIELD, 
+    FSUPPLIERNAME, 
+    FSUPPLIERABBR, 
+    FSTOCKID, 
+    FGOODSTYPEID, 
+    FBARCODE, 
+    FGOODSID, 
+    FPRDNAME, 
+    CAST(FRETSALEPRICE as float) as FRETSALEPRICE, 
+    CAST(FTAXRATE as float) as FTAXRATE, 
+    FLOT, 
+    CAST(FRETQTY as float) as FRETQTY, 
+    CAST(FRETAMOUNT as float) as FRETAMOUNT, 
+    FDETAILREMARK, 
+    FCHECKSTATUS, 
+    FUploadDate, 
+    FIsDo, 
+    FINISHTIME, 
+    EFFECTDATE, 
+    MANUFACTUREDATE, 
+    FDATE, 
+    FReturnId, 
+    FMessage, 
+    FOccurrenceTime
+    from RDS_ECS_src_pur_return where CONVERT(date,FDATE,20) = '{FStartDate}'
+    """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -1106,7 +2231,43 @@ def returnPurchaseByDate_query(token, FStartDate):
 
     app3 = RdClient(token=token)
 
-    data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_pur_return", field="FDATE", FStartDate=FStartDate)
+    # data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_pur_return", field="FDATE", FStartDate=FStartDate)
+
+    sql = f"""
+    select
+    FMRBBILLNO, 
+    FPURORDERNO, 
+    FPOORDERSEQ, 
+    FBILLTYPEID, 
+    FCUSTOMERNUMBER, 
+    FSUPPLIERFIELD, 
+    FSUPPLIERNAME, 
+    FSUPPLIERABBR, 
+    FSTOCKID, 
+    FGOODSTYPEID, 
+    FBARCODE, 
+    FGOODSID, 
+    FPRDNAME, 
+    CAST(FRETSALEPRICE as float) as FRETSALEPRICE, 
+    CAST(FTAXRATE as float) as FTAXRATE, 
+    FLOT, 
+    CAST(FRETQTY as float) as FRETQTY, 
+    CAST(FRETAMOUNT as float) as FRETAMOUNT, 
+    FDETAILREMARK, 
+    FCHECKSTATUS, 
+    FUploadDate, 
+    FIsDo, 
+    FINISHTIME, 
+    EFFECTDATE, 
+    MANUFACTUREDATE, 
+    FDATE, 
+    FReturnId, 
+    FMessage, 
+    FOccurrenceTime
+    from RDS_ECS_src_pur_return where CONVERT(date,FDATE,20) = '{FStartDate}'
+    """
+
+    data = app3.select(sql)
 
     res = pd.DataFrame(data)
 
@@ -1124,8 +2285,36 @@ def assemblyDisByDate_query(token, FStartDate):
 
     app3 = RdClient(token=token)
 
-    data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_DISASS_DELIVERY", field="Fdate",
-                                 FStartDate=FStartDate)
+    # data = getDataSource_byDate(app3=app3, tablename="RDS_ECS_src_DISASS_DELIVERY", field="Fdate",
+    #                              FStartDate=FStartDate)
+
+    sql = f"""
+    select 
+    FBillNo, 
+    Fseq, 
+    Fdate, 
+    FDeptName, 
+    FItemNumber, 
+    FItemName, 
+    FItemModel, 
+    FUnitName, 
+    CAST(Fqty as float) as Fqty, 
+    FStockName, 
+    Flot, 
+    Fnote, 
+    FInterID, 
+    FEFFECTIVEDATE, 
+    FPRODUCEDATE, 
+    FSUMSUPPLIERLOT, 
+    FAFFAIRTYPE, 
+    FMessage, 
+    FOccurrenceTime, 
+    FIsDo
+    from RDS_ECS_src_DISASS_DELIVERY where CONVERT(date,Fdate,20) = '{FStartDate}'
+    """
+
+    data = app3.select(sql)
+
     res = pd.DataFrame(data)
 
     return res
@@ -1680,7 +2869,7 @@ def saleOrderStatus_upload(token,FNumber,FName="赛普集团新账套"):
 
     DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_Sales_Order", field="FSALEORDERNO", FNumber=FNumber)
 
-    return "修改成功"
+    return True
     
          
 def purchaseOrderStatus_upload(token,FNumber,FName="赛普集团新账套"):
@@ -1697,7 +2886,7 @@ def purchaseOrderStatus_upload(token,FNumber,FName="赛普集团新账套"):
 
     DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_pur_poorder", field="FPURORDERNO", FNumber=FNumber)
 
-    return "修改成功"
+    return True
 
 
 def noticeShipmentStatus_upload(token,FNumber,FName="赛普集团新账套"):
@@ -1709,7 +2898,7 @@ def noticeShipmentStatus_upload(token,FNumber,FName="赛普集团新账套"):
 
     DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_sal_delivery", field="FDELIVERYNO", FNumber=FNumber)
 
-    return "修改成功"
+    return True
     
 
 
@@ -1721,7 +2910,7 @@ def receiptNoticeStatus_upload(token,FNumber,FName="赛普集团新账套"):
 
     DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_pur_storageacct", field="FGODOWNNO", FNumber=FNumber)
 
-    return "修改成功"
+    return True
     
     
 
@@ -1732,7 +2921,7 @@ def saleOutStatus_upload(token,FNumber,FName="赛普集团新账套"):
 
     DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_sal_delivery", field="FDELIVERYNO", FNumber=FNumber)
 
-    return "修改成功"
+    return True
     
 
 def purchaseStorageStatus_upload(token,FNumber,FName="赛普集团新账套"):
@@ -1743,7 +2932,7 @@ def purchaseStorageStatus_upload(token,FNumber,FName="赛普集团新账套"):
 
     DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_pur_storageacct", field="FGODOWNNO", FNumber=FNumber)
 
-    return "修改成功"
+    return True
 
 
 def otherInStockStatus_upload(token,FNumber,FName="赛普集团新账套"):
@@ -1754,7 +2943,7 @@ def otherInStockStatus_upload(token,FNumber,FName="赛普集团新账套"):
 
     DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_pur_storageacct", field="FGODOWNNO", FNumber=FNumber)
 
-    return "修改成功"
+    return True
 
 
 def otherOutStatus_upload(token,FNumber,FName="赛普集团新账套"):
@@ -1765,7 +2954,7 @@ def otherOutStatus_upload(token,FNumber,FName="赛普集团新账套"):
 
     DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_sal_delivery", field="FDELIVERYNO", FNumber=FNumber)
 
-    return "修改成功"
+    return True
 
 
 def salesBillingStatus_upload(token,FNumber,FName="赛普集团新账套"):
@@ -1776,7 +2965,7 @@ def salesBillingStatus_upload(token,FNumber,FName="赛普集团新账套"):
 
     DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_sal_billreceivable", field="FBillNo", FNumber=FNumber)
 
-    return "修改成功"
+    return True
 
 
 def purchasesBillingStatus_upload(token,FNumber,FName="赛普集团新账套"):
@@ -1787,7 +2976,7 @@ def purchasesBillingStatus_upload(token,FNumber,FName="赛普集团新账套"):
 
     DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_pur_invoice", field="FBILLNO", FNumber=FNumber)
 
-    return "修改成功"
+    return True
         
         
 
@@ -1799,7 +2988,7 @@ def returnNoticeStatus_upload(token,FNumber,FName="赛普集团新账套"):
 
     DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_sal_returnstock", field="FMRBBILLNO", FNumber=FNumber)
 
-    return "修改成功"
+    return True
    
    
 
@@ -1811,7 +3000,7 @@ def returnSaleStatus_upload(token,FNumber,FName="赛普集团新账套"):
 
     DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_sal_returnstock", field="FMRBBILLNO", FNumber=FNumber)
 
-    return "修改成功"
+    return True
         
         
 
@@ -1823,7 +3012,7 @@ def returnRequestStatus_upload(token,FNumber,FName="赛普集团新账套"):
 
     DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_pur_return", field="FMRBBILLNO", FNumber=FNumber)
 
-    return "修改成功"
+    return True
 
 
 def returnPurchaseStatus_upload(token,FNumber,FName="赛普集团新账套"):
@@ -1833,7 +3022,7 @@ def returnPurchaseStatus_upload(token,FNumber,FName="赛普集团新账套"):
 
     DataStatus_update(app3=app3, FTableName="RDS_ECS_ods_pur_return", field="FMRBBILLNO", FNumber=FNumber)
 
-    return "修改成功"
+    return True
 
 
 def assemblyDisStatus_upload(token,FNumber,FName="赛普集团新账套"):
@@ -1844,7 +3033,7 @@ def assemblyDisStatus_upload(token,FNumber,FName="赛普集团新账套"):
 
     Status_upload(app3=app3, tablename="RDS_ECS_ods_DISASS_DELIVERY", field="FBillNo",
                          FNumber=FNumber)
-    return "修改成功"
+    return True
     
 
 def saleOrderLog_query(token,FNumber):
@@ -2125,19 +3314,25 @@ def saleOrderByDate_sync(FToken,FDate,FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    res = salesorder.salesOrder(FDate, FDate, app2, app3, option)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    return res
+        res = salesorder.salesOrder(FDate, FDate, app2, app3, option)
+
+        return True
+
+    else:
+
+        return False
 
 
 
@@ -2156,19 +3351,25 @@ def purchaseOrderByDate_sync(FToken, FDate, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    res = purchaseorder.purchaseOrder(FDate, FDate, app2, app3, option)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    return res
+        res = purchaseorder.purchaseOrder(FDate, FDate, app2, app3, option)
+
+        return True
+
+    else:
+
+        return False
 
 
 def noticeShipmentByDate_sync(FToken, FDate, FName="赛普集团新账套"):
@@ -2186,20 +3387,25 @@ def noticeShipmentByDate_sync(FToken, FDate, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    res = noticeshipment.noticeShipment(FDate, FDate, app2, app3, option)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    return res
+        res = noticeshipment.noticeShipment(FDate, FDate, app2, app3, option)
 
+        return True
+
+    else:
+
+        return False
 
 
 def receiptNoticeByDate_sync(FToken, FDate, FName="赛普集团新账套"):
@@ -2217,19 +3423,25 @@ def receiptNoticeByDate_sync(FToken, FDate, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    res = receiptnotice.receiptNotice(FDate, FDate, app2, app3, option)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    return res
+        res = receiptnotice.receiptNotice(FDate, FDate, app2, app3, option)
+
+        return True
+
+    else:
+
+        return False
 
 
 
@@ -2248,20 +3460,25 @@ def saleOutByDate_sync(FToken, FDate, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    res = saledelivery.saleOut(FDate, FDate, app2, app3, option)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    return res
+        res = saledelivery.saleOut(FDate, FDate, app2, app3, option)
 
+        return True
+
+    else:
+
+        return False
 
 def purchaseStorageByDate_sync(FToken, FDate, FName="赛普集团新账套"):
     '''
@@ -2278,20 +3495,25 @@ def purchaseStorageByDate_sync(FToken, FDate, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    res = purchasestorage.purchaseStorage(FDate, FDate, app2, app3, option)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    return res
+        res = purchasestorage.purchaseStorage(FDate, FDate, app2, app3, option)
 
+        return True
+
+    else:
+
+        return False
 
 def otherInStockByDate_sync(FToken, FDate, FName="赛普集团新账套"):
     '''
@@ -2308,19 +3530,25 @@ def otherInStockByDate_sync(FToken, FDate, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    res = otherinstock.otherInStock(FDate, FDate, app2, app3, option)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    return res
+        res = otherinstock.otherInStock(FDate, FDate, app2, app3, option)
+
+        return True
+
+    else:
+
+        return False
 
 
 
@@ -2339,19 +3567,25 @@ def otherOutByDate_sync(FToken, FDate, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    res = otherout.otherOut(FDate, FDate, app2, app3, option)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    return res
+        res = otherout.otherOut(FDate, FDate, app2, app3, option)
+
+        return True
+
+    else:
+
+        return False
 
 
 def salesBillingByDate_sync(FToken, FDate, FName="赛普集团新账套"):
@@ -2369,20 +3603,25 @@ def salesBillingByDate_sync(FToken, FDate, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    res = salesbilling.salesBilling(FDate, FDate, app2, app3, option)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    return res
+        res = salesbilling.salesBilling(FDate, FDate, app2, app3, option)
 
+        return True
+
+    else:
+
+        return False
 
 def purchasesBillingByDate_sync(FToken, FDate, FName="赛普集团新账套"):
     '''
@@ -2399,19 +3638,25 @@ def purchasesBillingByDate_sync(FToken, FDate, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    res = purchasesbilling.purchasesBilling(FDate, FDate, app2, app3, option)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    return res
+        res = purchasesbilling.purchasesBilling(FDate, FDate, app2, app3, option)
+
+        return True
+
+    else:
+
+        return False
 
 
 def returnNoticeByDate_sync(FToken, FDate, FName="赛普集团新账套"):
@@ -2429,19 +3674,25 @@ def returnNoticeByDate_sync(FToken, FDate, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    res = returnnotice.returnNotice(FDate, FDate, app2, app3, option)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    return res
+        res = returnnotice.returnNotice(FDate, FDate, app2, app3, option)
+
+        return True
+
+    else:
+
+        return False
 
 
 def returnSaleByDate_sync(FToken, FDate, FName="赛普集团新账套"):
@@ -2459,19 +3710,25 @@ def returnSaleByDate_sync(FToken, FDate, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    res = returnsales.returnSale(FDate, FDate, app2, app3, option)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    return res
+        res = returnsales.returnSale(FDate, FDate, app2, app3, option)
+
+        return True
+
+    else:
+
+        return False
 
 
 def returnRequestByDate_sync(FToken, FDate, FName="赛普集团新账套"):
@@ -2489,19 +3746,25 @@ def returnRequestByDate_sync(FToken, FDate, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    res = returnrequest.returnRequest(FDate, FDate, app2, app3, option)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    return res
+        res = returnrequest.returnRequest(FDate, FDate, app2, app3, option)
+
+        return True
+
+    else:
+
+        return False
 
 
 def returnPurchaseByDate_sync(FToken, FDate, FName="赛普集团新账套"):
@@ -2519,19 +3782,25 @@ def returnPurchaseByDate_sync(FToken, FDate, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    res = returnpurchase.returnPurchase(FDate, FDate, app2, app3, option)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    return res
+        res = returnpurchase.returnPurchase(FDate, FDate, app2, app3, option)
+
+        return True
+
+    else:
+
+        return False
 
 
 def assemblyDisByDate_sync(FToken, FDate, FName="赛普集团新账套"):
@@ -2549,18 +3818,24 @@ def assemblyDisByDate_sync(FToken, FDate, FName="赛普集团新账套"):
 
     key = app3.select(sql)
 
-    app2 = RdClient(token=key[0]["FApp2"])
+    if key:
 
-    option = {
-        "acct_id": key[0]["acct_id"],
-        "user_name": key[0]["user_name"],
-        "app_id": key[0]["app_id"],
-        "app_sec": key[0]["app_sec"],
-        "server_url": key[0]["server_url"],
-    }
+        app2 = RdClient(token=key[0]["FApp2"])
 
-    res = disassemble.assemblyDis(FDate, FDate, app2, app3, option)
+        option = {
+            "acct_id": key[0]["acct_id"],
+            "user_name": key[0]["user_name"],
+            "app_id": key[0]["app_id"],
+            "app_sec": key[0]["app_sec"],
+            "server_url": key[0]["server_url"],
+        }
 
-    return res
+        res = disassemble.assemblyDis(FDate, FDate, app2, app3, option)
+
+        return True
+
+    else:
+
+        return False
 
 

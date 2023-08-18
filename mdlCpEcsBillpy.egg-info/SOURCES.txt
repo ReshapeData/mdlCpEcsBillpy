@@ -29,3 +29,11 @@ mdlCpEcsBillpy.egg-info/SOURCES.txt
 mdlCpEcsBillpy.egg-info/dependency_links.txt
 mdlCpEcsBillpy.egg-info/requires.txt
 mdlCpEcsBillpy.egg-info/top_level.txt
+tests/test.py
+tests/testBillByDate_query.py
+tests/testBillByDate_sync.py
+tests/testBillByNumber_query.py
+tests/testBillByNumber_sync.py
+tests/testBillErpDataByFNumber_query.py
+tests/testBillStatus_upload.py
+tests/testLog_query.py
